@@ -31,4 +31,28 @@ model Challenge {
   // User relationship
   userId      String
   user        User     @relation(fields: [userId], references: [id])
+
+  // ChallengeItem relationship
+  items       ChallengeItem[]
+}
+
+model ChallengeItem {
+  id          String   @id @default(cuid())
+  name        String
+  type        ChallengeItemType
+  days        String[]
+  targetCount Int?
+  unit        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Challenge relationship
+  challengeId String
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+}
+
+enum ChallengeItemType {
+  COMPLETE
+  OVER
+  UNDER
 }
