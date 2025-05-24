@@ -49,10 +49,28 @@ model ChallengeItem {
   // Challenge relationship
   challengeId String
   challenge   Challenge @relation(fields: [challengeId], references: [id])
+
+  // ChallengeItemHistory relationship
+  history     ChallengeItemHistory[]
 }
 
 enum ChallengeItemType {
   COMPLETE
   OVER
   UNDER
+}
+
+model ChallengeItemHistory {
+  id          String   @id @default(cuid())
+  date        DateTime
+  complete    Boolean?
+  count       Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // ChallengeItem relationship
+  challengeItemId String
+  challengeItem   ChallengeItem @relation(fields: [challengeItemId], references: [id])
+
+  @@unique([challengeItemId, date])
 }
