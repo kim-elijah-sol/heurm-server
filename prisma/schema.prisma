@@ -30,7 +30,7 @@ model Challenge {
 
   // User relationship
   userId      String
-  user        User     @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // ChallengeItem relationship
   items       ChallengeItem[]
@@ -48,7 +48,7 @@ model ChallengeItem {
 
   // Challenge relationship
   challengeId String
-  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
 
   // ChallengeItemHistory relationship
   history     ChallengeItemHistory[]
@@ -70,7 +70,7 @@ model ChallengeItemHistory {
 
   // ChallengeItem relationship
   challengeItemId String
-  challengeItem   ChallengeItem @relation(fields: [challengeItemId], references: [id])
+  challengeItem   ChallengeItem @relation(fields: [challengeItemId], references: [id], onDelete: Cascade)
 
   @@unique([challengeItemId, date])
 }
