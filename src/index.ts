@@ -184,6 +184,21 @@ app
           }),
         }
       )
+      .delete(
+        'logout',
+        async ({ body: { refreshToken } }) => {
+          await redisClient.del(RedisKeyStore.refreshToken(refreshToken));
+
+          return {
+            result: true,
+          };
+        },
+        {
+          body: t.Object({
+            refreshToken: t.String(),
+          }),
+        }
+      )
   );
 app.listen(3000, () => {
   console.log('[Win Yourself]:: Server Start 3000 port');
