@@ -7,7 +7,9 @@ import { RedisKeyStore } from './lib/redis-key-store';
 
 const app = new Elysia();
 
-const prismaClient = new PrismaClient();
+const prismaClient = new PrismaClient({
+  log: ['query', 'info', 'error', 'warn'],
+});
 
 app.group('/user', (app) =>
   app.group('/join', (app) =>
