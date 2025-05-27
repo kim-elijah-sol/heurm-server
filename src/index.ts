@@ -4,6 +4,7 @@ import { v } from './lib/validator';
 import { redisClient } from './lib/app/redis-client';
 import { SHA256 } from 'crypto-js';
 import { RedisKeyStore } from './lib/redis-key-store';
+import { EMAIL_VERIFY_EXPIRE, EMAIL_VERIFY_OK } from './lib/constant';
 
 const app = new Elysia();
 
@@ -41,7 +42,7 @@ app.group('/user', (app) =>
           const redisKey = RedisKeyStore.verifyEmail(id, email);
 
           await redisClient.set(redisKey, code);
-          await redisClient.expire(redisKey, 300);
+          await redisClient.expire(redisKey, EMAIL_VERIFY_EXPIRE);
 
           return {
             id,
@@ -56,17 +57,24 @@ app.group('/user', (app) =>
       .get(
         '/verify-email',
         async ({ query: { code, id, email }, set }) => {
-          const codeInRedis = await redisClient.get(
-            RedisKeyStore.verifyEmail(id, email)
-          );
+          const redisKey = RedisKeyStore.verifyEmail(id, email);
+
+          const codeInRedis = await redisClient.get(redisKey);
 
           if (codeInRedis === null) {
             set.status = 400;
             throw new Error('not exist verify infomation');
           }
 
+          const result = code === codeInRedis;
+
+          if (result) {
+            redisClient.set(redisKey, EMAIL_VERIFY_OK);
+            redisClient.expire(redisKey, EMAIL_VERIFY_EXPIRE);
+          }
+
           return {
-            result: code === codeInRedis,
+            result,
           };
         },
         {
@@ -80,21 +88,16 @@ app.group('/user', (app) =>
       .post(
         '',
         async ({
-          body: { email, id, code, password, timezone, timezoneOffset },
+          body: { email, id, password, timezone, timezoneOffset },
           set,
         }) => {
           const redisKey = RedisKeyStore.verifyEmail(id, email);
 
           const codeInRedis = await redisClient.get(redisKey);
 
-          if (codeInRedis === null) {
+          if (codeInRedis === EMAIL_VERIFY_OK) {
             set.status = 400;
             throw new Error('not exist verify infomation');
-          }
-
-          if (codeInRedis !== code) {
-            set.status = 400;
-            throw new Error('verify code is not matching');
           }
 
           await redisClient.del(redisKey);
@@ -113,7 +116,6 @@ app.group('/user', (app) =>
           body: t.Object({
             email: v.isEmail,
             id: t.String(),
-            code: v.isVerifyCode,
             password: v.isPassword,
             timezone: t.String(),
             timezoneOffset: t.Number(),
