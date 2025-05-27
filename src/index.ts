@@ -37,11 +37,13 @@ app.group('/user', (app) =>
             .toString()
             .padStart(6, '0');
 
-          await redisClient.set(RedisKeyStore.verifyEmail(id, email), code);
+          const redisKey = RedisKeyStore.verifyEmail(id, email);
+
+          await redisClient.set(redisKey, code);
+          await redisClient.expire(redisKey, 300);
 
           return {
             id,
-            code,
           };
         },
         {
