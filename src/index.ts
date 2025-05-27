@@ -4,7 +4,6 @@ import { v } from './lib/validator';
 import { redisClient } from './lib/app/redis-client';
 import { SHA256 } from 'crypto-js';
 import { RedisKeyStore } from './lib/redis-key-store';
-import { isEmail } from './lib/validator/is-email';
 
 const app = new Elysia();
 
@@ -70,9 +69,52 @@ app.group('/user', (app) =>
         },
         {
           query: t.Object({
-            code: t.String({ maxLength: 6, minLength: 6 }),
+            code: v.isVerifyCode,
             id: t.String(),
-            email: isEmail,
+            email: v.isEmail,
+          }),
+        }
+      )
+      .post(
+        '',
+        async ({
+          body: { email, id, code, password, timezone, timezoneOffset },
+          set,
+        }) => {
+          const redisKey = RedisKeyStore.verifyEmail(id, email);
+
+          const codeInRedis = await redisClient.get(redisKey);
+
+          if (codeInRedis === null) {
+            set.status = 400;
+            throw new Error('not exist verify infomation');
+          }
+
+          if (codeInRedis !== code) {
+            set.status = 400;
+            throw new Error('verify code is not matching');
+          }
+
+          await redisClient.del(redisKey);
+
+          await prismaClient.user.create({
+            data: {
+              email,
+              password: SHA256(password).toString(),
+              name: email.split('@')[0],
+              timezone,
+              timezoneOffset,
+            },
+          });
+        },
+        {
+          body: t.Object({
+            email: v.isEmail,
+            id: t.String(),
+            code: v.isVerifyCode,
+            password: v.isPassword,
+            timezone: t.String(),
+            timezoneOffset: t.Number(),
           }),
         }
       )
