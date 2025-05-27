@@ -8,7 +8,7 @@ import { isEmail } from './lib/validator/is-email';
 
 const app = new Elysia();
 
-const prisma = new PrismaClient();
+const prismaClient = new PrismaClient();
 
 app.group('/user', (app) =>
   app.group('/join', (app) =>
@@ -16,7 +16,7 @@ app.group('/user', (app) =>
       .get(
         '/verify-email-send',
         async ({ query: { email }, set }) => {
-          const 이미_가입된_계정 = await prisma.user.findUnique({
+          const 이미_가입된_계정 = await prismaClient.user.findUnique({
             select: {
               id: true,
             },
