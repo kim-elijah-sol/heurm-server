@@ -18,7 +18,7 @@ app.group('/user', (app) =>
       .get(
         '/verify-email-send',
         async ({ query: { email }, set }) => {
-          const 이미_가입된_계정 = await prismaClient.user.findUnique({
+          const alreadyJoinedAccount = await prismaClient.user.findUnique({
             select: {
               id: true,
             },
@@ -27,7 +27,7 @@ app.group('/user', (app) =>
             },
           });
 
-          if (이미_가입된_계정 !== null) {
+          if (alreadyJoinedAccount !== null) {
             set.status = 409;
 
             throw new Error('Already joined email address.');
