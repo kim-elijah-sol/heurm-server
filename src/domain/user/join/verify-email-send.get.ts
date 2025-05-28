@@ -1,8 +1,8 @@
 import { SHA256 } from 'crypto-js';
+import { t } from 'elysia';
 import { AppContext, prismaClient, redisClient } from '~/app';
 import { EMAIL_VERIFY_EXPIRE } from '~/lib/constant';
 import { RedisKeyStore } from '~/lib/redis-key-store';
-import { t } from 'elysia';
 import { v } from '~/lib/validator';
 
 export const verifyEmailSend = async ({

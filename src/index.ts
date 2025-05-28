@@ -1,8 +1,8 @@
 import { randomUUIDv7 } from 'bun';
 import { SHA256 } from 'crypto-js';
 import { t } from 'elysia';
-import { verifyEmailSend } from '~/domain/user/join';
-import { EMAIL_VERIFY_EXPIRE, EMAIL_VERIFY_OK } from '~/lib/constant';
+import { verifyEmail, verifyEmailSend } from '~/domain/user/join';
+import { EMAIL_VERIFY_OK } from '~/lib/constant';
 import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 import { app, prismaClient, redisClient } from './app';
@@ -12,37 +12,7 @@ app.group('/user', (app) =>
     .group('/join', (app) =>
       app
         .get('/verify-email-send', verifyEmailSend, verifyEmailSend.model)
-        .get(
-          '/verify-email',
-          async ({ query: { code, id, email }, set }) => {
-            const redisKey = RedisKeyStore.verifyEmail(id, email);
-
-            const codeInRedis = await redisClient.get(redisKey);
-
-            if (codeInRedis === null) {
-              set.status = 400;
-              throw new Error('not exist verify infomation');
-            }
-
-            const result = code === codeInRedis;
-
-            if (result) {
-              redisClient.set(redisKey, EMAIL_VERIFY_OK);
-              redisClient.expire(redisKey, EMAIL_VERIFY_EXPIRE);
-            }
-
-            return {
-              result,
-            };
-          },
-          {
-            query: t.Object({
-              code: v.isVerifyCode,
-              id: t.String(),
-              email: v.isEmail,
-            }),
-          }
-        )
+        .post('/verify-email', verifyEmail, verifyEmail.model)
         .post(
           '',
           async ({
