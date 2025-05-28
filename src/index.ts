@@ -1,11 +1,11 @@
-import { t } from 'elysia';
-import { v } from './lib/validator';
-import { redisClient, prismaClient, app } from './app';
-import { SHA256 } from 'crypto-js';
-import { RedisKeyStore } from './lib/redis-key-store';
-import { EMAIL_VERIFY_EXPIRE, EMAIL_VERIFY_OK } from './lib/constant';
 import { randomUUIDv7 } from 'bun';
-import { verifyEmailSend } from './domain/user/join';
+import { SHA256 } from 'crypto-js';
+import { t } from 'elysia';
+import { verifyEmailSend } from '~/domain/user/join';
+import { EMAIL_VERIFY_EXPIRE, EMAIL_VERIFY_OK } from '~/lib/constant';
+import { RedisKeyStore } from '~/lib/redis-key-store';
+import { v } from '~/lib/validator';
+import { app, prismaClient, redisClient } from './app';
 
 app.group('/user', (app) =>
   app
