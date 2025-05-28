@@ -1,5 +1,5 @@
 import { t } from 'elysia';
-import { login } from '~/domain/user';
+import { login, logout } from '~/domain/user';
 import { join, verifyEmail, verifyEmailSend } from '~/domain/user/join';
 import { RedisKeyStore } from '~/lib/redis-key-store';
 import { app, redisClient } from './app';
@@ -13,21 +13,7 @@ app.group('/user', (app) =>
         .post('', join, join.model)
     )
     .post('/login', login, login.model)
-    .delete(
-      'logout',
-      async ({ body: { refreshToken } }) => {
-        await redisClient.del(RedisKeyStore.refreshToken(refreshToken));
-
-        return {
-          result: true,
-        };
-      },
-      {
-        body: t.Object({
-          refreshToken: t.String(),
-        }),
-      }
-    )
+    .delete('logout', logout, logout.model)
     .post(
       '/refresh',
       async ({ body: { refreshToken, clientId }, set, rtJWT, atJWT }) => {
