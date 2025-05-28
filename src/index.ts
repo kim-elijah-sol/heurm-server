@@ -1,8 +1,7 @@
 import { randomUUIDv7 } from 'bun';
 import { SHA256 } from 'crypto-js';
 import { t } from 'elysia';
-import { verifyEmail, verifyEmailSend } from '~/domain/user/join';
-import { EMAIL_VERIFY_OK } from '~/lib/constant';
+import { join, verifyEmail, verifyEmailSend } from '~/domain/user/join';
 import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 import { app, prismaClient, redisClient } from './app';
@@ -13,43 +12,7 @@ app.group('/user', (app) =>
       app
         .get('/verify-email-send', verifyEmailSend, verifyEmailSend.model)
         .post('/verify-email', verifyEmail, verifyEmail.model)
-        .post(
-          '',
-          async ({
-            body: { email, id, password, timezone, timezoneOffset },
-            set,
-          }) => {
-            const redisKey = RedisKeyStore.verifyEmail(id, email);
-
-            const codeInRedis = await redisClient.get(redisKey);
-
-            if (codeInRedis === EMAIL_VERIFY_OK) {
-              set.status = 400;
-              throw new Error('not exist verify infomation');
-            }
-
-            await redisClient.del(redisKey);
-
-            await prismaClient.user.create({
-              data: {
-                email,
-                password: SHA256(password).toString(),
-                name: email.split('@')[0],
-                timezone,
-                timezoneOffset,
-              },
-            });
-          },
-          {
-            body: t.Object({
-              email: v.isEmail,
-              id: t.String(),
-              password: v.isPassword,
-              timezone: t.String(),
-              timezoneOffset: t.Number(),
-            }),
-          }
-        )
+        .post('', join, join.model)
     )
     .post(
       '/login',
