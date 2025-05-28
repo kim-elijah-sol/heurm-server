@@ -5,50 +5,13 @@ import { SHA256 } from 'crypto-js';
 import { RedisKeyStore } from './lib/redis-key-store';
 import { EMAIL_VERIFY_EXPIRE, EMAIL_VERIFY_OK } from './lib/constant';
 import { randomUUIDv7 } from 'bun';
+import { verifyEmailSend } from './domain/user/join';
 
 app.group('/user', (app) =>
   app
     .group('/join', (app) =>
       app
-        .get(
-          '/verify-email-send',
-          async ({ query: { email }, set }) => {
-            const alreadyJoinedAccount = await prismaClient.user.findUnique({
-              select: {
-                id: true,
-              },
-              where: {
-                email,
-              },
-            });
-
-            if (alreadyJoinedAccount !== null) {
-              set.status = 409;
-
-              throw new Error('Already joined email address.');
-            }
-
-            const id = SHA256(`${new Date().valueOf()}-${email}`).toString();
-
-            const code = Math.floor(Math.random() * 999999)
-              .toString()
-              .padStart(6, '0');
-
-            const redisKey = RedisKeyStore.verifyEmail(id, email);
-
-            await redisClient.set(redisKey, code);
-            await redisClient.expire(redisKey, EMAIL_VERIFY_EXPIRE);
-
-            return {
-              id,
-            };
-          },
-          {
-            query: t.Object({
-              email: v.isEmail,
-            }),
-          }
-        )
+        .get('/verify-email-send', verifyEmailSend, verifyEmailSend.model)
         .get(
           '/verify-email',
           async ({ query: { code, id, email }, set }) => {
