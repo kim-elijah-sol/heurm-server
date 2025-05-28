@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
 import { Elysia, t } from 'elysia';
 import { v } from './lib/validator';
-import { redisClient } from './lib/app/redis-client';
+import { redisClient, prismaClient } from './lib/app';
 import { SHA256 } from 'crypto-js';
 import { RedisKeyStore } from './lib/redis-key-store';
 import { EMAIL_VERIFY_EXPIRE, EMAIL_VERIFY_OK } from './lib/constant';
@@ -21,10 +20,6 @@ const app = new Elysia()
       secret: process.env.RT_JWT!,
     })
   );
-
-const prismaClient = new PrismaClient({
-  log: ['query', 'info', 'error', 'warn'],
-});
 
 app.group('/user', (app) =>
   app
