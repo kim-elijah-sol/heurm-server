@@ -1,5 +1,8 @@
 {
-    "typescript.tsdk": "node_modules/typescript/lib",
-    "editor.cursorBlinking": "smooth",
-    "editor.cursorSmoothCaretAnimation": true
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  }
 }
