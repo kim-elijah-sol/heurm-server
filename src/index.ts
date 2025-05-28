@@ -1,25 +1,10 @@
-import { Elysia, t } from 'elysia';
+import { t } from 'elysia';
 import { v } from './lib/validator';
-import { redisClient, prismaClient } from './lib/app';
+import { redisClient, prismaClient, app } from './app';
 import { SHA256 } from 'crypto-js';
 import { RedisKeyStore } from './lib/redis-key-store';
 import { EMAIL_VERIFY_EXPIRE, EMAIL_VERIFY_OK } from './lib/constant';
-import jwt from '@elysiajs/jwt';
 import { randomUUIDv7 } from 'bun';
-
-const app = new Elysia()
-  .use(
-    jwt({
-      name: 'atJWT',
-      secret: process.env.AT_JWT!,
-    })
-  )
-  .use(
-    jwt({
-      name: 'rtJWT',
-      secret: process.env.RT_JWT!,
-    })
-  );
 
 app.group('/user', (app) =>
   app
