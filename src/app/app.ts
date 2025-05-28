@@ -1,5 +1,5 @@
 import jwt from '@elysiajs/jwt';
-import Elysia, { InferContext } from 'elysia';
+import Elysia, { InferContext, RouteSchema } from 'elysia';
 
 export const app = new Elysia()
   .use(
@@ -15,4 +15,8 @@ export const app = new Elysia()
     })
   );
 
-export type AppContext = InferContext<typeof app>;
+export type AppContext<Schema extends RouteSchema = {}> = InferContext<
+  typeof app,
+  '',
+  Schema
+>;
