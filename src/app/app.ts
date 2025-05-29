@@ -1,3 +1,4 @@
+import cors from '@elysiajs/cors';
 import jwt from '@elysiajs/jwt';
 import Elysia, { InferContext, RouteSchema } from 'elysia';
 
@@ -13,7 +14,8 @@ export const app = new Elysia()
       name: 'rtJWT',
       secret: process.env.RT_JWT!,
     })
-  );
+  )
+  .use(cors());
 
 export type AppContext<Schema extends RouteSchema = {}> = InferContext<
   typeof app,
