@@ -1,7 +1,7 @@
 import cors from '@elysiajs/cors';
 import jwt from '@elysiajs/jwt';
 import Elysia, { InferContext, RouteSchema, status } from 'elysia';
-import { ConflictError } from '~/lib/error';
+import { BadRequestError, ConflictError } from '~/lib/error';
 
 export const app = new Elysia()
   .use(
@@ -20,6 +20,8 @@ export const app = new Elysia()
   .onError(({ error }) => {
     if (error instanceof ConflictError) {
       return status(409, error.message);
+    } else if (error instanceof BadRequestError) {
+      return status(400, error.message);
     }
   });
 
