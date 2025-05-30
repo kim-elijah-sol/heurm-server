@@ -1,10 +1,10 @@
 import { t } from 'elysia';
 import { AppContext, redisClient } from '~/app';
+import { UnauthorizedError } from '~/lib/error';
 import { RedisKeyStore } from '~/lib/redis-key-store';
 
 export const refresh = async ({
   body: { refreshToken, clientId },
-  set,
   rtJWT,
   atJWT,
 }: AppContext<{
@@ -15,15 +15,13 @@ export const refresh = async ({
   );
 
   if (clientIdInRedis !== clientId) {
-    set.status = 401;
-    throw new Error('authorization error');
+    throw new UnauthorizedError('authorization error');
   }
 
   const verifyResult = await rtJWT.verify(refreshToken);
 
   if (verifyResult === false) {
-    set.status = 401;
-    throw new Error('authorization error');
+    throw new UnauthorizedError('authorization error');
   }
 
   const { id } = verifyResult as { id: string };

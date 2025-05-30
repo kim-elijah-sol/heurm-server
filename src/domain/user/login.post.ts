@@ -2,6 +2,7 @@ import { randomUUIDv7 } from 'bun';
 import { SHA256 } from 'crypto-js';
 import { t } from 'elysia';
 import { AppContext, prismaClient, redisClient } from '~/app';
+import { UnauthorizedError } from '~/lib/error';
 import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 
@@ -9,7 +10,6 @@ export const login = async ({
   body: { email, password },
   atJWT,
   rtJWT,
-  set,
 }: AppContext<{
   body: typeof loginBodyModel.static;
 }>) => {
@@ -24,8 +24,7 @@ export const login = async ({
   });
 
   if (user === null) {
-    set.status = 401;
-    throw new Error('can not find matching account');
+    throw new UnauthorizedError('can not find matching account');
   }
 
   const { id } = user;
