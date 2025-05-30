@@ -1,23 +1,19 @@
 import { t } from 'elysia';
-import { AppContext, redisClient } from '~/app';
+import { redisClient } from '~/app';
+import { createAPI } from '~/lib/create-api';
 import { RedisKeyStore } from '~/lib/redis-key-store';
 
-export const logout = async ({
-  body: { refreshToken },
-}: AppContext<{
-  body: typeof logoutBodyModel.static;
-}>) => {
-  await redisClient.del(RedisKeyStore.refreshToken(refreshToken));
+export const logout = createAPI(
+  async ({ body: { refreshToken } }) => {
+    await redisClient.del(RedisKeyStore.refreshToken(refreshToken));
 
-  return {
-    result: true,
-  };
-};
-
-const logoutBodyModel = t.Object({
-  refreshToken: t.String(),
-});
-
-logout.model = {
-  body: logoutBodyModel,
-};
+    return {
+      result: true,
+    };
+  },
+  {
+    body: t.Object({
+      refreshToken: t.String(),
+    }),
+  }
+);
