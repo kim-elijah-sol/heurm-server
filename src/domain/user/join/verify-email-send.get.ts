@@ -2,13 +2,11 @@ import { SHA256 } from 'crypto-js';
 import { t } from 'elysia';
 import { AppContext, prismaClient, redisClient } from '~/app';
 import { EMAIL_VERIFY_EXPIRE } from '~/lib/constant';
+import { ConflictError } from '~/lib/error';
 import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 
-export const verifyEmailSend = async ({
-  query: { email },
-  set,
-}: AppContext) => {
+export const verifyEmailSend = async ({ query: { email } }: AppContext) => {
   const alreadyJoinedAccount = await prismaClient.user.findUnique({
     select: {
       id: true,
@@ -19,9 +17,7 @@ export const verifyEmailSend = async ({
   });
 
   if (alreadyJoinedAccount !== null) {
-    set.status = 409;
-
-    throw new Error('Already joined email address.');
+    throw new ConflictError('Already joined email address.');
   }
 
   const id = SHA256(`${new Date().valueOf()}-${email}`).toString();

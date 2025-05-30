@@ -1,6 +1,7 @@
 import cors from '@elysiajs/cors';
 import jwt from '@elysiajs/jwt';
-import Elysia, { InferContext, RouteSchema } from 'elysia';
+import Elysia, { InferContext, RouteSchema, status } from 'elysia';
+import { ConflictError } from '~/lib/error';
 
 export const app = new Elysia()
   .use(
@@ -15,7 +16,12 @@ export const app = new Elysia()
       secret: process.env.RT_JWT!,
     })
   )
-  .use(cors());
+  .use(cors())
+  .onError(({ error }) => {
+    if (error instanceof ConflictError) {
+      return status(409, error.message);
+    }
+  });
 
 export type AppContext<Schema extends RouteSchema = {}> = InferContext<
   typeof app,
