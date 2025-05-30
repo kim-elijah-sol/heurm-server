@@ -1,45 +1,41 @@
 import { SHA256 } from 'crypto-js';
 import { t } from 'elysia';
-import { AppContext, prismaClient, redisClient } from '~/app';
+import { prismaClient, redisClient } from '~/app';
 import { EMAIL_VERIFY_OK } from '~/lib/constant';
+import { createAPI } from '~/lib/create-api';
 import { BadRequestError } from '~/lib/error';
 import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 
-export const join = async ({
-  body: { email, id, password, timezone, timezoneOffset },
-}: AppContext<{
-  body: typeof joinBodyModel.static;
-}>) => {
-  const redisKey = RedisKeyStore.verifyEmail(id, email);
+export const join = createAPI(
+  async ({ body: { email, id, password, timezone, timezoneOffset } }) => {
+    const redisKey = RedisKeyStore.verifyEmail(id, email);
 
-  const codeInRedis = await redisClient.get(redisKey);
+    const codeInRedis = await redisClient.get(redisKey);
 
-  if (codeInRedis === EMAIL_VERIFY_OK) {
-    throw new BadRequestError('not exist verify infomation');
+    if (codeInRedis === EMAIL_VERIFY_OK) {
+      throw new BadRequestError('not exist verify infomation');
+    }
+
+    await redisClient.del(redisKey);
+
+    await prismaClient.user.create({
+      data: {
+        email,
+        password: SHA256(password).toString(),
+        name: email.split('@')[0],
+        timezone,
+        timezoneOffset,
+      },
+    });
+  },
+  {
+    body: t.Object({
+      email: v.isEmail,
+      id: t.String(),
+      password: v.isPassword,
+      timezone: t.String(),
+      timezoneOffset: t.Number(),
+    }),
   }
-
-  await redisClient.del(redisKey);
-
-  await prismaClient.user.create({
-    data: {
-      email,
-      password: SHA256(password).toString(),
-      name: email.split('@')[0],
-      timezone,
-      timezoneOffset,
-    },
-  });
-};
-
-const joinBodyModel = t.Object({
-  email: v.isEmail,
-  id: t.String(),
-  password: v.isPassword,
-  timezone: t.String(),
-  timezoneOffset: t.Number(),
-});
-
-join.model = {
-  body: joinBodyModel,
-};
+);
