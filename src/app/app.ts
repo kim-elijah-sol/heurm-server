@@ -2,6 +2,8 @@ import cors from '@elysiajs/cors';
 import jwt from '@elysiajs/jwt';
 import Elysia, { InferContext, RouteSchema, status } from 'elysia';
 import * as e from '~/lib/error';
+import { prismaClient } from './prisma-client';
+import { redisClient } from './redis-client';
 
 export const app = new Elysia()
   .use(
@@ -17,6 +19,8 @@ export const app = new Elysia()
     })
   )
   .use(cors())
+  .decorate('prismaClient', prismaClient)
+  .decorate('redisClient', redisClient)
   .onError(({ error }) => {
     if (error instanceof e.BadRequestError) {
       return status(400, error.message);

@@ -1,14 +1,19 @@
 import { randomUUIDv7 } from 'bun';
 import { SHA256 } from 'crypto-js';
 import { t } from 'elysia';
-import { prismaClient, redisClient } from '~/app';
 import { createAPI } from '~/lib/create-api';
 import { UnauthorizedError } from '~/lib/error';
 import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 
 export const login = createAPI(
-  async ({ body: { email, password }, atJWT, rtJWT }) => {
+  async ({
+    body: { email, password },
+    atJWT,
+    rtJWT,
+    prismaClient,
+    redisClient,
+  }) => {
     const user = await prismaClient.user.findUnique({
       select: {
         id: true,

@@ -1,11 +1,10 @@
 import { t } from 'elysia';
-import { redisClient } from '~/app';
 import { createAPI } from '~/lib/create-api';
 import { UnauthorizedError } from '~/lib/error';
 import { RedisKeyStore } from '~/lib/redis-key-store';
 
 export const refresh = createAPI(
-  async ({ body: { refreshToken, clientId }, rtJWT, atJWT }) => {
+  async ({ body: { refreshToken, clientId }, rtJWT, atJWT, redisClient }) => {
     const clientIdInRedis = await redisClient.get(
       RedisKeyStore.refreshToken(refreshToken)
     );

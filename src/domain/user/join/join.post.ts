@@ -1,6 +1,5 @@
 import { SHA256 } from 'crypto-js';
 import { t } from 'elysia';
-import { prismaClient, redisClient } from '~/app';
 import { EMAIL_VERIFY_OK } from '~/lib/constant';
 import { createAPI } from '~/lib/create-api';
 import { BadRequestError } from '~/lib/error';
@@ -8,7 +7,11 @@ import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 
 export const join = createAPI(
-  async ({ body: { email, id, password, timezone, timezoneOffset } }) => {
+  async ({
+    body: { email, id, password, timezone, timezoneOffset },
+    prismaClient,
+    redisClient,
+  }) => {
     const redisKey = RedisKeyStore.verifyEmail(id, email);
 
     const codeInRedis = await redisClient.get(redisKey);

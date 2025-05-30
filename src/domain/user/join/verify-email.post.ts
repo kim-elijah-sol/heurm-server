@@ -1,5 +1,4 @@
 import { t } from 'elysia';
-import { redisClient } from '~/app';
 import { EMAIL_VERIFY_EXPIRE, EMAIL_VERIFY_OK } from '~/lib/constant';
 import { createAPI } from '~/lib/create-api';
 import { BadRequestError } from '~/lib/error';
@@ -7,7 +6,7 @@ import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 
 export const verifyEmail = createAPI(
-  async ({ query: { code, id, email } }) => {
+  async ({ query: { code, id, email }, redisClient }) => {
     const redisKey = RedisKeyStore.verifyEmail(id, email);
 
     const codeInRedis = await redisClient.get(redisKey);

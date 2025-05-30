@@ -1,6 +1,5 @@
 import { SHA256 } from 'crypto-js';
 import { t } from 'elysia';
-import { prismaClient, redisClient } from '~/app';
 import { EMAIL_VERIFY_EXPIRE } from '~/lib/constant';
 import { createAPI } from '~/lib/create-api';
 import { ConflictError } from '~/lib/error';
@@ -8,7 +7,7 @@ import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 
 export const verifyEmailSend = createAPI(
-  async ({ query: { email } }) => {
+  async ({ query: { email }, prismaClient, redisClient }) => {
     const alreadyJoinedAccount = await prismaClient.user.findUnique({
       select: {
         id: true,
