@@ -1,5 +1,10 @@
 # Win Yourself Server Journal
 
+# 2025-05-30
+
+Elysis 에서 핸들러를 분리하는 법을 알아냈다.<br>
+best practice 를 좀 더 연구해봐야겠다
+
 # 2025-05-27
 
 대강적인 회원 Flow api 를 개발했다.<br>
