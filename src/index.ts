@@ -1,4 +1,4 @@
-import { login, logout, refresh } from '~/domain/user';
+import { login, logout, profile, refresh } from '~/domain/user';
 import { join, verifyEmail, verifyEmailSend } from '~/domain/user/join';
 import { app } from './app';
 import { guardAccessToken } from './lib/plugin';
@@ -16,11 +16,9 @@ app.group('/user', (app) =>
     .post('/refresh', refresh, refresh.model)
 );
 
-app.derive(guardAccessToken).group('/user', (app) =>
-  app.get('/profile', ({ userId }) => {
-    return userId;
-  })
-);
+app
+  .derive(guardAccessToken)
+  .group('/user', (app) => app.get('/profile', profile, profile.model));
 
 app.listen(3000, () => {
   console.log('[Win Yourself]:: Server Start 3000 port');
