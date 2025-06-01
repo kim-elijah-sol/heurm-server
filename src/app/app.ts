@@ -11,6 +11,7 @@ export const app = new Elysia()
     jwt({
       name: 'atJWT',
       secret: process.env.AT_JWT!,
+      exp: '30m',
     })
   )
   .use(
@@ -37,4 +38,6 @@ export type AppContext<Schema extends RouteSchema = {}> = InferContext<
   typeof app,
   '',
   Schema
->;
+> & {
+  userId?: string;
+};
