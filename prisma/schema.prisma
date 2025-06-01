@@ -16,6 +16,7 @@ model User {
   timezoneOffset Int
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+  profileImage   String?
 
   // Challenge relationship
   challenges     Challenge[]
