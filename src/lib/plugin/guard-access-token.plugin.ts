@@ -30,7 +30,9 @@ export const guardAccessToken = async (context: AppContext) => {
           throw new UnauthorizedError('Access token is expired');
         }
       }
-    } catch {
+    } catch (error) {
+      if (error instanceof UnauthorizedError) throw error;
+
       throw new UnauthorizedError('Access token is incorrect');
     }
 
