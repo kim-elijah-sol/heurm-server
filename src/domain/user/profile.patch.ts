@@ -8,7 +8,13 @@ import { v } from '~/lib/validator';
 
 export const patchProfile = createAPI(
   async ({
-    body: { name, profileFile, currentPassword, newPassword },
+    body: {
+      name,
+      profileFile,
+      currentPassword,
+      newPassword,
+      isProfileImageRemove,
+    },
     prismaClient,
     userId,
   }) => {
@@ -31,9 +37,11 @@ export const patchProfile = createAPI(
       }
     }
 
-    let profileImage: string | undefined = undefined;
+    let profileImage: string | null | undefined = undefined;
 
-    if (profileFile) {
+    if (isProfileImageRemove) {
+      profileImage = null;
+    } else if (profileFile) {
       const originalName = profileFile.name;
       const lastDotIndex = originalName.lastIndexOf('.');
 
@@ -71,9 +79,10 @@ export const patchProfile = createAPI(
   {
     body: t.Object({
       name: v.isName,
-      profileFile: t.Nullable(t.File({ format: 'image/*' })),
+      profileFile: t.Optional(t.Nullable(t.File({ format: 'image/*' }))),
       currentPassword: t.Optional(t.Nullable(v.isPassword)),
       newPassword: t.Optional(t.Nullable(v.isPassword)),
+      isProfileImageRemove: t.Optional(t.String()),
     }),
   }
 );
