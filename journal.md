@@ -1,5 +1,11 @@
 # Win Yourself Server Journal
 
+# 2025-06-02
+
+createAPI 함수의 타입을 좀 더 가다듬었다.<br>
+기존 방식대로라면 body 의 타입에 모델에 따라 유추되지 않았는데,<br>
+static 을 기반으로 타입을 유추할 수 있도록 수정했다.
+
 # 2025-05-30
 
 Elysis 에서 핸들러를 분리하는 법을 알아냈다.<br>
