@@ -1,24 +1,33 @@
 import { login, logout, profile, refresh } from '~/domain/user';
 import { join, verifyEmail, verifyEmailSend } from '~/domain/user/join';
 import { app } from './app';
+import { patchProfile } from './domain/user/profile.patch';
 import { guardAccessToken } from './lib/plugin';
 
-app.group('/user', (app) =>
-  app
-    .group('/join', (app) =>
-      app
-        .get('/verify-email-send', verifyEmailSend, verifyEmailSend.model)
-        .post('/verify-email', verifyEmail, verifyEmail.model)
-        .post('', join, join.model)
-    )
-    .post('/login', login, login.model)
-    .delete('logout', logout, logout.model)
-    .post('/refresh', refresh, refresh.model)
-);
+app
+  .get('/uploads/:fileName', ({ params }) =>
+    Bun.file(`./uploads/${params.fileName}`)
+  )
+  .group('/user', (app) =>
+    app
+      .group('/join', (app) =>
+        app
+          .get('/verify-email-send', verifyEmailSend, verifyEmailSend.model)
+          .post('/verify-email', verifyEmail, verifyEmail.model)
+          .post('', join, join.model)
+      )
+      .post('/login', login, login.model)
+      .delete('logout', logout, logout.model)
+      .post('/refresh', refresh, refresh.model)
+  );
 
 app
   .derive(guardAccessToken)
-  .group('/user', (app) => app.get('/profile', profile, profile.model));
+  .group('/user', (app) =>
+    app
+      .get('/profile', profile, profile.model)
+      .patch('/profile', patchProfile, patchProfile.model)
+  );
 
 app.listen(3000, () => {
   console.log('[Win Yourself]:: Server Start 3000 port');
