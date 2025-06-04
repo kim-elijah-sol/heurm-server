@@ -19,11 +19,17 @@ app
           .post('', join, join.model)
       )
       .group('/reset-password', (app) =>
-        app.post(
-          '/verify-email-send',
-          resetPassword.postVerifyEmailSend,
-          resetPassword.postVerifyEmailSend.model
-        )
+        app
+          .post(
+            '/verify-email-send',
+            resetPassword.postVerifyEmailSend,
+            resetPassword.postVerifyEmailSend.model
+          )
+          .post(
+            '/verify-email',
+            resetPassword.postVerifyEmail,
+            resetPassword.postVerifyEmail.model
+          )
       )
       .post('/login', login, login.model)
       .delete('logout', logout, logout.model)
