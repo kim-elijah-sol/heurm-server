@@ -16,7 +16,7 @@ export const join = createAPI(
 
     const codeInRedis = await redisClient.get(redisKey);
 
-    if (codeInRedis === EMAIL_VERIFY_OK) {
+    if (codeInRedis !== EMAIL_VERIFY_OK) {
       throw new BadRequestError('not exist verify infomation');
     }
 
