@@ -1,5 +1,10 @@
 # Win Yourself Server Journal
 
+# 2025-06-04
+
+찐으로 틀은 거의 다 잡힌 듯.<br>
+이제 후딱 API들을 찍어 내야겠다.
+
 # 2025-06-02
 
 createAPI 함수의 타입을 좀 더 가다듬었다.<br>
