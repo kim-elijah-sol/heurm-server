@@ -30,6 +30,11 @@ app
             resetPassword.postVerifyEmail,
             resetPassword.postVerifyEmail.model
           )
+          .patch(
+            '/',
+            resetPassword.patchResetPassword,
+            resetPassword.patchResetPassword.model
+          )
       )
       .post('/login', login, login.model)
       .delete('logout', logout, logout.model)
