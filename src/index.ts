@@ -1,6 +1,7 @@
 import { login, logout, profile, refresh } from '~/domain/user';
 import { join, verifyEmail, verifyEmailSend } from '~/domain/user/join';
 import { app } from './app';
+import { postChallenge } from './domain/challenge';
 import { patchProfile } from './domain/user/profile.patch';
 import { guardAccessToken } from './lib/plugin';
 
@@ -27,6 +28,9 @@ app
     app
       .get('/profile', profile, profile.model)
       .patch('/profile', patchProfile, patchProfile.model)
+  )
+  .group('/challenge', (app) =>
+    app.post('/', postChallenge, postChallenge.model)
   );
 
 app.listen(3000, () => {
