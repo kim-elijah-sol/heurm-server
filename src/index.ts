@@ -1,5 +1,5 @@
 import { login, logout, profile, refresh } from '~/domain/user';
-import { join, verifyEmail, verifyEmailSend } from '~/domain/user/join';
+import { join } from '~/domain/user/join';
 import { app } from './app';
 import { postChallenge } from './domain/challenge';
 import { patchProfile } from './domain/user/profile.patch';
@@ -14,9 +14,17 @@ app
     app
       .group('/join', (app) =>
         app
-          .post('/verify-email-send', verifyEmailSend, verifyEmailSend.model)
-          .post('/verify-email', verifyEmail, verifyEmail.model)
-          .post('', join, join.model)
+          .post(
+            '/verify-email-send',
+            join.postVerifyEmailSend,
+            join.postVerifyEmailSend.model
+          )
+          .post(
+            '/verify-email',
+            join.postVerifyEmail,
+            join.postVerifyEmail.model
+          )
+          .post('', join.postJoin, join.postJoin.model)
       )
       .group('/reset-password', (app) =>
         app

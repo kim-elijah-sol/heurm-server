@@ -5,7 +5,7 @@ import { BadRequestError } from '~/lib/error';
 import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 
-export const verifyEmail = createAPI(
+export const postVerifyEmail = createAPI(
   async ({ body: { code, id, email }, redisClient }) => {
     const redisKey = RedisKeyStore.verifyEmail(id, email);
 

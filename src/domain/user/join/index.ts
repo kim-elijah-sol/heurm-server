@@ -1,3 +1,9 @@
-export * from './join.post';
-export * from './verify-email-send.post';
-export * from './verify-email.post';
+import { postJoin } from './join.post';
+import { postVerifyEmailSend } from './verify-email-send.post';
+import { postVerifyEmail } from './verify-email.post';
+
+export const join = {
+  postJoin,
+  postVerifyEmail,
+  postVerifyEmailSend,
+};

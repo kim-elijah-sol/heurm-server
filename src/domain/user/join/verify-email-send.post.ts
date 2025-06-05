@@ -6,7 +6,7 @@ import { ConflictError } from '~/lib/error';
 import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 
-export const verifyEmailSend = createAPI(
+export const postVerifyEmailSend = createAPI(
   async ({ body: { email }, prismaClient, redisClient }) => {
     const alreadyJoinedAccount = await prismaClient.user.findUnique({
       select: {

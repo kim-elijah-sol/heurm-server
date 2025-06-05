@@ -6,7 +6,7 @@ import { BadRequestError } from '~/lib/error';
 import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 
-export const join = createAPI(
+export const postJoin = createAPI(
   async ({
     body: { email, id, password, timezone, timezoneOffset },
     prismaClient,
