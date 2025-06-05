@@ -31,6 +31,10 @@ export const join = createAPI(
         timezoneOffset,
       },
     });
+
+    return {
+      result: true,
+    };
   },
   {
     body: t.Object({
