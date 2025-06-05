@@ -7,7 +7,7 @@ import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 
 export const verifyEmailSend = createAPI(
-  async ({ query: { email }, prismaClient, redisClient }) => {
+  async ({ body: { email }, prismaClient, redisClient }) => {
     const alreadyJoinedAccount = await prismaClient.user.findUnique({
       select: {
         id: true,
@@ -37,7 +37,7 @@ export const verifyEmailSend = createAPI(
     };
   },
   {
-    query: t.Object({
+    body: t.Object({
       email: v.isEmail,
     }),
   }

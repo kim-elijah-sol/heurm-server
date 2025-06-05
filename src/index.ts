@@ -14,7 +14,7 @@ app
     app
       .group('/join', (app) =>
         app
-          .get('/verify-email-send', verifyEmailSend, verifyEmailSend.model)
+          .post('/verify-email-send', verifyEmailSend, verifyEmailSend.model)
           .post('/verify-email', verifyEmail, verifyEmail.model)
           .post('', join, join.model)
       )
