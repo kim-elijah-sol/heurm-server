@@ -1,9 +1,7 @@
-import { join } from '~/domain/user/join';
-import { app } from './app';
-import { postChallenge } from './domain/challenge';
-import { user } from './domain/user';
-import { resetPassword } from './domain/user/reset-password';
-import { guardAccessToken } from './lib/plugin';
+import { app } from '~/app';
+import { challenge } from '~/domain/challenge';
+import { user } from '~/domain/user';
+import { guardAccessToken } from '~/lib/plugin';
 
 app
   .get('/uploads/:fileName', ({ params }) =>
@@ -15,32 +13,32 @@ app
         app
           .post(
             '/verify-email-send',
-            join.postVerifyEmailSend,
-            join.postVerifyEmailSend.model
+            user.join.postVerifyEmailSend,
+            user.join.postVerifyEmailSend.model
           )
           .post(
             '/verify-email',
-            join.postVerifyEmail,
-            join.postVerifyEmail.model
+            user.join.postVerifyEmail,
+            user.join.postVerifyEmail.model
           )
-          .post('', join.postJoin, join.postJoin.model)
+          .post('', user.join.postJoin, user.join.postJoin.model)
       )
       .group('/reset-password', (app) =>
         app
           .post(
             '/verify-email-send',
-            resetPassword.postVerifyEmailSend,
-            resetPassword.postVerifyEmailSend.model
+            user.resetPassword.postVerifyEmailSend,
+            user.resetPassword.postVerifyEmailSend.model
           )
           .post(
             '/verify-email',
-            resetPassword.postVerifyEmail,
-            resetPassword.postVerifyEmail.model
+            user.resetPassword.postVerifyEmail,
+            user.resetPassword.postVerifyEmail.model
           )
           .patch(
             '/',
-            resetPassword.patchResetPassword,
-            resetPassword.patchResetPassword.model
+            user.resetPassword.patchResetPassword,
+            user.resetPassword.patchResetPassword.model
           )
       )
       .post('/login', user.postLogin, user.postLogin.model)
@@ -56,7 +54,7 @@ app
       .patch('/profile', user.patchProfile, user.patchProfile.model)
   )
   .group('/challenge', (app) =>
-    app.post('/', postChallenge, postChallenge.model)
+    app.post('/', challenge.postChallenge, challenge.postChallenge.model)
   );
 
 app.listen(3000, () => {

@@ -1,1 +1,5 @@
-export * from './challenge.post';
+import { postChallenge } from './challenge.post';
+
+export const challenge = {
+  postChallenge,
+};
