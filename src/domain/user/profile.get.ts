@@ -1,7 +1,7 @@
 import { createAPI } from '~/lib/create-api';
 import { BadRequestError } from '~/lib/error';
 
-export const profile = createAPI(async ({ userId, prismaClient }) => {
+export const getProfile = createAPI(async ({ userId, prismaClient }) => {
   const result = await prismaClient.user.findUnique({
     where: {
       id: userId,

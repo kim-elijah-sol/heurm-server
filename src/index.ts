@@ -1,8 +1,7 @@
-import { login, logout, profile, refresh } from '~/domain/user';
 import { join } from '~/domain/user/join';
 import { app } from './app';
 import { postChallenge } from './domain/challenge';
-import { patchProfile } from './domain/user/profile.patch';
+import { user } from './domain/user';
 import { resetPassword } from './domain/user/reset-password';
 import { guardAccessToken } from './lib/plugin';
 
@@ -44,17 +43,17 @@ app
             resetPassword.patchResetPassword.model
           )
       )
-      .post('/login', login, login.model)
-      .delete('logout', logout, logout.model)
-      .post('/refresh', refresh, refresh.model)
+      .post('/login', user.postLogin, user.postLogin.model)
+      .delete('logout', user.deleteLogout, user.deleteLogout.model)
+      .post('/refresh', user.postRefresh, user.postRefresh.model)
   );
 
 app
   .derive(guardAccessToken)
   .group('/user', (app) =>
     app
-      .get('/profile', profile, profile.model)
-      .patch('/profile', patchProfile, patchProfile.model)
+      .get('/profile', user.getProfile, user.getProfile.model)
+      .patch('/profile', user.patchProfile, user.patchProfile.model)
   )
   .group('/challenge', (app) =>
     app.post('/', postChallenge, postChallenge.model)

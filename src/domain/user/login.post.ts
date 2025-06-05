@@ -6,7 +6,7 @@ import { UnauthorizedError } from '~/lib/error';
 import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 
-export const login = createAPI(
+export const postLogin = createAPI(
   async ({
     body: { email, password },
     atJWT,
