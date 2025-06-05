@@ -20,6 +20,8 @@ export const verifyEmail = createAPI(
     if (result) {
       redisClient.set(redisKey, EMAIL_VERIFY_OK);
       redisClient.expire(redisKey, EMAIL_VERIFY_EXPIRE);
+    } else {
+      throw new BadRequestError('verify code is not matching');
     }
 
     return {
