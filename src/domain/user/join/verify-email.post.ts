@@ -6,7 +6,7 @@ import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 
 export const verifyEmail = createAPI(
-  async ({ query: { code, id, email }, redisClient }) => {
+  async ({ body: { code, id, email }, redisClient }) => {
     const redisKey = RedisKeyStore.verifyEmail(id, email);
 
     const codeInRedis = await redisClient.get(redisKey);
@@ -29,7 +29,7 @@ export const verifyEmail = createAPI(
     };
   },
   {
-    query: t.Object({
+    body: t.Object({
       code: v.isVerifyCode,
       id: t.String(),
       email: v.isEmail,
