@@ -12,11 +12,13 @@ export const postChallenge = createAPI(
       },
       select: {
         id: true,
+        title: true,
       },
     });
 
     return {
       id: result.id,
+      title: result.title,
     };
   },
   {

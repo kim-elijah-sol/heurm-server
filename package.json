@@ -13,6 +13,7 @@
     "@types/crypto-js": "^4.2.2",
     "@types/jwt-decode": "^3.1.0",
     "crypto-js": "^4.2.0",
+    "date-fns-tz": "^3.2.0",
     "elysia": "latest",
     "fs": "^0.0.1-security",
     "jwt-decode": "^4.0.0",

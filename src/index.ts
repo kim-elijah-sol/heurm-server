@@ -54,7 +54,13 @@ app
       .patch('/profile', user.patchProfile, user.patchProfile.model)
   )
   .group('/challenge', (app) =>
-    app.post('/', challenge.postChallenge, challenge.postChallenge.model)
+    app
+      .post('/', challenge.postChallenge, challenge.postChallenge.model)
+      .get('/', challenge.getChallenge, challenge.getChallenge.model)
+      .get(
+        '/:challengeId/challenge-item/by-day',
+        challenge.challengeItem.challengeItemByDay
+      )
   );
 
 app.listen(3000, () => {

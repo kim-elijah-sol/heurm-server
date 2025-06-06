@@ -1,5 +1,6 @@
 import { isChallengeColor } from './is-challenge-color';
 import { isChallengeTitle } from './is-challenge-title';
+import { isDay } from './is-day';
 import { isEmail } from './is-email';
 import { isName } from './is-name';
 import { isPassword } from './is-password';
@@ -12,4 +13,5 @@ export const v = {
   isName,
   isChallengeTitle,
   isChallengeColor,
+  isDay,
 };
