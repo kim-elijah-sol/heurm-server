@@ -60,9 +60,14 @@ app
       .group('/challenge-item', (app) =>
         app
           .get(
-            '/by-day',
-            challenge.challengeItem.getChallengeItemByDay,
-            challenge.challengeItem.getChallengeItemByDay.model
+            '/by-date',
+            challenge.challengeItem.getChallengeItemByDate,
+            challenge.challengeItem.getChallengeItemByDate.model
+          )
+          .get(
+            '/',
+            challenge.challengeItem.getChallengeItem,
+            challenge.challengeItem.getChallengeItem.model
           )
           .post(
             '/',

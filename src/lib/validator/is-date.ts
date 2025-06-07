@@ -1,5 +1,5 @@
 import { t } from 'elysia';
 
-export const isDay = t.String({
+export const isDate = t.String({
   format: 'date',
 });

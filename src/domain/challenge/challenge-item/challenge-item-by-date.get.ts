@@ -33,21 +33,21 @@ const formatChallengeItem = ({
   history: history[0] ?? null,
 });
 
-export const getChallengeItemByDay = createAPI(
-  async ({ query: { day, challengeId }, prismaClient, userId }) => {
+export const getChallengeItemByDate = createAPI(
+  async ({ query: { date, challengeId }, prismaClient, userId }) => {
     const userTimezone = await getUserTimezone(userId!);
 
     const historyStartDate = fromZonedTime(
-      new Date(`${day} 00:00:00`),
+      new Date(`${date} 00:00:00`),
       userTimezone
     );
 
     const historyEndDate = fromZonedTime(
-      new Date(`${day} 23:59:59`),
+      new Date(`${date} 23:59:59`),
       userTimezone
     );
 
-    const userDate = toZonedTime(day, userTimezone);
+    const userDate = toZonedTime(date, userTimezone);
 
     const userDay = getDay(userDate.getDay());
 
@@ -66,6 +66,7 @@ export const getChallengeItemByDay = createAPI(
           select: {
             complete: true,
             count: true,
+            targetCount: true,
           },
           where: {
             date: {
@@ -93,7 +94,7 @@ export const getChallengeItemByDay = createAPI(
   {
     query: t.Object({
       challengeId: t.String(),
-      day: v.isDay,
+      date: v.isDate,
     }),
   }
 );

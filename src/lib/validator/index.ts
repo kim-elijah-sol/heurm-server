@@ -3,7 +3,7 @@ import { isChallengeItemDays } from './is-challenge-item-days';
 import { isChallengeItemName } from './is-challenge-item-name';
 import { isChallengeItemType } from './is-challenge-item-type';
 import { isChallengeTitle } from './is-challenge-title';
-import { isDay } from './is-day';
+import { isDate } from './is-date';
 import { isEmail } from './is-email';
 import { isName } from './is-name';
 import { isPassword } from './is-password';
@@ -16,7 +16,7 @@ export const v = {
   isName,
   isChallengeTitle,
   isChallengeColor,
-  isDay,
+  isDate,
   isChallengeItemName,
   isChallengeItemType,
   isChallengeItemDays,
