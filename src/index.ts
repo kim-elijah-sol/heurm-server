@@ -57,9 +57,18 @@ app
     app
       .post('/', challenge.postChallenge, challenge.postChallenge.model)
       .get('/', challenge.getChallenge, challenge.getChallenge.model)
-      .get(
-        '/:challengeId/challenge-item/by-day',
-        challenge.challengeItem.challengeItemByDay
+      .group('/challenge-item', (app) =>
+        app
+          .get(
+            '/by-day',
+            challenge.challengeItem.getChallengeItemByDay,
+            challenge.challengeItem.getChallengeItemByDay.model
+          )
+          .post(
+            '/',
+            challenge.challengeItem.postChallengeItem,
+            challenge.challengeItem.postChallengeItem.model
+          )
       )
   );
 
