@@ -30,6 +30,9 @@ export const getChallengeItem = createAPI(
         targetCount: true,
         unit: true,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
     return result;
