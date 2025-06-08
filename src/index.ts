@@ -80,6 +80,11 @@ app
             challenge.challengeItem.patchChallengeItem,
             challenge.challengeItem.patchChallengeItem.model
           )
+          .delete(
+            '/',
+            challenge.challengeItem.deleteChallengeItem,
+            challenge.challengeItem.deleteChallengeItem.model
+          )
       )
   );
 
