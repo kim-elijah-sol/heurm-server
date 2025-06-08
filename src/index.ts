@@ -55,9 +55,10 @@ app
   )
   .group('/challenge', (app) =>
     app
-      .post('/', challenge.postChallenge, challenge.postChallenge.model)
       .get('/', challenge.getChallenge, challenge.getChallenge.model)
+      .post('/', challenge.postChallenge, challenge.postChallenge.model)
       .patch('/', challenge.patchChallenge, challenge.patchChallenge.model)
+      .delete('/', challenge.deleteChallenge, challenge.deleteChallenge.model)
       .group('/challenge-item', (app) =>
         app
           .get(
