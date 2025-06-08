@@ -75,6 +75,11 @@ app
             challenge.challengeItem.postChallengeItem,
             challenge.challengeItem.postChallengeItem.model
           )
+          .patch(
+            '/',
+            challenge.challengeItem.patchChallengeItem,
+            challenge.challengeItem.patchChallengeItem.model
+          )
       )
   );
 
