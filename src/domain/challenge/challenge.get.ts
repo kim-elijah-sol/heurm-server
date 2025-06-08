@@ -10,6 +10,9 @@ export const getChallenge = createAPI(async ({ userId, prismaClient }) => {
       title: true,
       color: true,
     },
+    orderBy: {
+      createdAt: 'asc',
+    },
   });
 
   return challenges;
