@@ -2,6 +2,7 @@ import { app } from '~/app';
 import { challenge } from '~/domain/challenge';
 import { user } from '~/domain/user';
 import { guardAccessToken } from '~/lib/plugin';
+import { history } from './domain/history';
 
 app
   .get('/uploads/:fileName', ({ params }) =>
@@ -87,6 +88,9 @@ app
             challenge.challengeItem.deleteChallengeItem.model
           )
       )
+  )
+  .group('/history', (app) =>
+    app.post('/', history.postHistory, history.postHistory.model)
   );
 
 app.listen(3000, () => {
