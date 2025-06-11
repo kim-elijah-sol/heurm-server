@@ -1,5 +1,12 @@
 # Win Yourself Server Journal
 
+# 2025-06-11
+
+현재는 history 부분을 작업 중이다.<br>
+사용자 데이터 조회 날짜는 UTC 로 저장하고 조회 시에는
+사용자의 timezone 을 기반으로 시간을 변경하기로.<br>
+과거에 history 를 놓친 데이터의 경우에는 targetCount 를 어떻게 추론할지가 문제...
+
 # 2025-06-04
 
 찐으로 틀은 거의 다 잡힌 듯.<br>
