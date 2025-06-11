@@ -60,6 +60,7 @@ app
       .post('/', challenge.postChallenge, challenge.postChallenge.model)
       .patch('/', challenge.patchChallenge, challenge.patchChallenge.model)
       .delete('/', challenge.deleteChallenge, challenge.deleteChallenge.model)
+      .get('/overview', challenge.getOverview, challenge.getOverview.model)
       .group('/challenge-item', (app) =>
         app
           .get(
