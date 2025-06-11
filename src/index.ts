@@ -90,7 +90,9 @@ app
       )
   )
   .group('/history', (app) =>
-    app.post('/', history.postHistory, history.postHistory.model)
+    app
+      .post('/', history.postHistory, history.postHistory.model)
+      .patch('/', history.patchHistory, history.patchHistory.model)
   );
 
 app.listen(3000, () => {
