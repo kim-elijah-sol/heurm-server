@@ -64,6 +64,7 @@ export const getChallengeItemByDate = createAPI(
         unit: true,
         history: {
           select: {
+            id: true,
             complete: true,
             count: true,
             targetCount: true,
