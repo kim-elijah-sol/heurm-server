@@ -1,5 +1,8 @@
 # Win Yourself Server Journal
 
+# 2025-06-13
+주력 API 는 완성했으니 좀 더 안정감에 잡중해야겠다.
+
 # 2025-06-11
 
 현재는 history 부분을 작업 중이다.<br>
