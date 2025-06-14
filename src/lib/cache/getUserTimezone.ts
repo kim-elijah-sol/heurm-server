@@ -6,11 +6,8 @@ export const getUserTimezone = async (userId: string) => {
   const inRedis = await redisClient.get(RedisKeyStore.userTimezone(userId));
 
   if (inRedis) {
-    console.log('user timezone in redis');
     return inRedis;
   }
-
-  console.log('user timezone in postgresql');
 
   const userTimezone = (
     await prismaClient.user.findUnique({
