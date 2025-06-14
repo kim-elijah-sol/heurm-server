@@ -17,7 +17,7 @@ export const getUserTimezone = async (userId: string) => {
   )?.timezone;
 
   if (!userTimezone) {
-    throw new UnauthorizedError('can not find matching account');
+    throw new UnauthorizedError('can not find user timezone data');
   }
 
   await redisClient.set(RedisKeyStore.userTimezone(userId), userTimezone);
