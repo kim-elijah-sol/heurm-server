@@ -94,6 +94,7 @@ app
     app
       .post('/', history.postHistory, history.postHistory.model)
       .patch('/', history.patchHistory, history.patchHistory.model)
+      .get('/by-week', history.getByWeek, history.getByWeek.model)
   );
 
 app.listen(3000, () => {
