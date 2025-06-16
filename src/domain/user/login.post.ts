@@ -38,6 +38,7 @@ export const postLogin = createAPI(
 
     const refreshToken = await rtJWT.sign({
       id,
+      ci: clientId,
     });
 
     await redisClient.set(RedisKeyStore.refreshToken(refreshToken), clientId);
