@@ -3,7 +3,7 @@ import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 import { t } from 'elysia';
 import { getUserTimezone } from '~/lib/cache';
 import { createAPI } from '~/lib/create-api';
-import { getDay } from '~/lib/fx';
+import { filterChallengeableItem, getDay } from '~/lib/fx';
 import { v } from '~/lib/validator';
 
 const formatChallengeItem = ({
@@ -84,14 +84,13 @@ export const getChallengeItemByDate = createAPI(
       },
     });
 
-    const todayChallengeItems = originalChallengeItems.filter((it) => {
-      return (
-        it.days.includes(userDay) &&
-        it.startAt.valueOf() <= historyStartDate.valueOf() &&
-        (it.endAt === null ||
-          (it.endAt && it.endAt.valueOf() >= historyEndDate.valueOf()))
-      );
-    });
+    const todayChallengeItems = originalChallengeItems.filter(
+      filterChallengeableItem({
+        day: userDay,
+        startDate: historyStartDate,
+        endDate: historyEndDate,
+      })
+    );
 
     return {
       originalChallengeItems: originalChallengeItems.map(formatChallengeItem),
