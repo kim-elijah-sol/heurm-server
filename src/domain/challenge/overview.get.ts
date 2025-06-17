@@ -45,6 +45,29 @@ export const getOverview = createAPI(
               },
             },
           },
+          where: {
+            AND: [
+              {
+                startAt: {
+                  lte: historyStartDate,
+                },
+              },
+              {
+                OR: [
+                  {
+                    endAt: {
+                      equals: null,
+                    },
+                  },
+                  {
+                    endAt: {
+                      gte: historyEndDate,
+                    },
+                  },
+                ],
+              },
+            ],
+          },
         },
       },
     });
