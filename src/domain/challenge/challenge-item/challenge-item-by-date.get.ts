@@ -62,6 +62,8 @@ export const getChallengeItemByDate = createAPI(
         days: true,
         targetCount: true,
         unit: true,
+        startAt: true,
+        endAt: true,
         history: {
           select: {
             id: true,
@@ -82,9 +84,14 @@ export const getChallengeItemByDate = createAPI(
       },
     });
 
-    const todayChallengeItems = originalChallengeItems.filter((it) =>
-      it.days.includes(userDay)
-    );
+    const todayChallengeItems = originalChallengeItems.filter((it) => {
+      return (
+        it.days.includes(userDay) &&
+        it.startAt.valueOf() <= historyStartDate.valueOf() &&
+        (it.endAt === null ||
+          (it.endAt && it.endAt.valueOf() >= historyEndDate.valueOf()))
+      );
+    });
 
     return {
       originalChallengeItems: originalChallengeItems.map(formatChallengeItem),
