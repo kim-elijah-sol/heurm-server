@@ -107,11 +107,21 @@ export const getByWeek = createAPI(
             .toISOString()
             .split('T')[0];
 
+          const userHistoryStartDate = fromZonedTime(
+            new Date(`${formatedHistoryDate} 00:00:00`),
+            userTimezone
+          );
+
+          const userHistoryEndDate = fromZonedTime(
+            new Date(`${formatedHistoryDate} 23:59:59`),
+            userTimezone
+          );
+
           if (
             filterChallengeableItem({
               day: userHistoryDay,
-              startDate: historyStartDate,
-              endDate: historyEndDate,
+              startDate: userHistoryStartDate,
+              endDate: userHistoryEndDate,
             })(challengeItem)
           ) {
             if (challengeItem.type === 'COMPLETE' && history.complete) {
