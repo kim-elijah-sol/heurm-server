@@ -5,7 +5,7 @@ import { v } from '~/lib/validator';
 
 export const postChallengeItem = createAPI(
   async ({
-    body: { challengeId, name, type, days, unit, targetCount },
+    body: { challengeId, name, type, days, unit, targetCount, startAt, endAt },
     userId,
     prismaClient,
   }) => {
@@ -31,6 +31,8 @@ export const postChallengeItem = createAPI(
         days,
         unit,
         targetCount,
+        startAt,
+        endAt,
       },
       select: {
         id: true,
@@ -49,6 +51,8 @@ export const postChallengeItem = createAPI(
       days: v.isChallengeItemDays,
       unit: t.Optional(t.Nullable(t.String())),
       targetCount: t.Optional(t.Nullable(t.Number())),
+      startAt: v.isDate,
+      endAt: t.Optional(t.Nullable(v.isDate)),
     }),
   }
 );
