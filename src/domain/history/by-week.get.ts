@@ -67,8 +67,6 @@ export const getByWeek = createAPI(
       };
     } = {};
 
-    console.log(JSON.stringify(result));
-
     for (const date of getDateRange(start, end)) {
       const day = getDay(new Date(date).getDay());
 
