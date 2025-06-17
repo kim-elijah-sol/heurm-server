@@ -2,7 +2,7 @@ import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 import { t } from 'elysia';
 import { getUserTimezone } from '~/lib/cache';
 import { createAPI } from '~/lib/create-api';
-import { getDay } from '~/lib/fx';
+import { filterChallengeableItem, getDay } from '~/lib/fx';
 import { v } from '~/lib/validator';
 
 const getDateRange = (start: string, end: string): string[] => {
@@ -39,6 +39,8 @@ export const getByWeek = createAPI(
           select: {
             days: true,
             type: true,
+            startAt: true,
+            endAt: true,
             history: {
               select: {
                 complete: true,
@@ -65,11 +67,30 @@ export const getByWeek = createAPI(
       };
     } = {};
 
+    console.log(JSON.stringify(result));
+
     for (const date of getDateRange(start, end)) {
       const day = getDay(new Date(date).getDay());
 
+      const startDate = fromZonedTime(
+        new Date(`${date} 00:00:00`),
+        userTimezone
+      );
+
+      const endDate = fromZonedTime(new Date(`${date} 23:59:59`), userTimezone);
+
       const all = result
-        .map(({ items }) => items.filter((it) => it.days.includes(day)).flat())
+        .map(({ items }) =>
+          items
+            .filter(
+              filterChallengeableItem({
+                day,
+                startDate: startDate,
+                endDate: endDate,
+              })
+            )
+            .flat()
+        )
         .flat().length;
 
       data[date] = { all: all, win: 0 };
@@ -88,7 +109,13 @@ export const getByWeek = createAPI(
             .toISOString()
             .split('T')[0];
 
-          if (challengeItem.days.includes(userHistoryDay)) {
+          if (
+            filterChallengeableItem({
+              day: userHistoryDay,
+              startDate: historyStartDate,
+              endDate: historyEndDate,
+            })(challengeItem)
+          ) {
             if (challengeItem.type === 'COMPLETE' && history.complete) {
               data[formatedHistoryDate].win += 1;
             } else if (
