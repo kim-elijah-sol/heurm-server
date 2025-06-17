@@ -16,6 +16,8 @@ export const patchChallengeItem = createAPI(
       date: _date,
       unit,
       targetCount,
+      startAt,
+      endAt,
     },
     userId,
     prismaClient,
@@ -65,6 +67,8 @@ export const patchChallengeItem = createAPI(
         days,
         unit,
         targetCount,
+        startAt,
+        endAt,
       },
     });
 
@@ -82,6 +86,8 @@ export const patchChallengeItem = createAPI(
       date: v.isDate,
       unit: t.Optional(t.Nullable(t.String())),
       targetCount: t.Optional(t.Nullable(t.Number())),
+      startAt: v.isDate,
+      endAt: t.Optional(t.Nullable(v.isDate)),
     }),
   }
 );
