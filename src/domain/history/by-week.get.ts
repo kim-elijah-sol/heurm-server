@@ -64,6 +64,7 @@ export const getByWeek = createAPI(
       [key in string]: {
         all: number;
         win: number;
+        lose: number;
       };
     } = {};
 
@@ -91,7 +92,7 @@ export const getByWeek = createAPI(
         )
         .flat().length;
 
-      data[date] = { all: all, win: 0 };
+      data[date] = { all: all, win: 0, lose: 0 };
     }
 
     for (const { items } of result) {
@@ -124,22 +125,25 @@ export const getByWeek = createAPI(
               endDate: userHistoryEndDate,
             })(challengeItem)
           ) {
-            if (challengeItem.type === 'COMPLETE' && history.complete) {
-              data[formatedHistoryDate].win += 1;
+            if (challengeItem.type === 'COMPLETE') {
+              if (history.complete === true) data[formatedHistoryDate].win += 1;
+              else if (history.complete === false)
+                data[formatedHistoryDate].lose += 1;
             } else if (
-              challengeItem.type === 'OVER' &&
+              (challengeItem.type === 'OVER' ||
+                challengeItem.type === 'UNDER') &&
               history.count !== null &&
-              history.targetCount !== null &&
-              history.count >= history.targetCount
+              history.targetCount !== null
             ) {
-              data[formatedHistoryDate].win += 1;
-            } else if (
-              challengeItem.type === 'UNDER' &&
-              history.count !== null &&
-              history.targetCount !== null &&
-              history.count <= history.targetCount
-            ) {
-              data[formatedHistoryDate].win += 1;
+              if (challengeItem.type === 'OVER') {
+                if (history.count >= history.targetCount)
+                  data[formatedHistoryDate].win += 1;
+                else data[formatedHistoryDate].lose += 1;
+              } else {
+                if (history.count <= history.targetCount)
+                  data[formatedHistoryDate].win += 1;
+                else data[formatedHistoryDate].lose += 1;
+              }
             }
           }
         }
