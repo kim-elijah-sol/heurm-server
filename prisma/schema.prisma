@@ -38,24 +38,42 @@ model Challenge {
 }
 
 model ChallengeItem {
-  id               String   @id @default(cuid())
-  name             String
-  type             ChallengeItemType
+  id                 String   @id @default(cuid())
+  name               String
+  type               ChallengeItemType
 
-  intervalType     ChallengeItemIntervalType
+  intervalType       ChallengeItemIntervalType
 
-  dailyType        ChallengeItemDailyType?
-  dailyInterval    Int?
-  dailyRest        Int?
-  daliyAnyInterval Int?
+  dailyType          ChallengeItemRepeatType?
+  dailyInterval      Int?
+  dailyRest          Int?
+  daliyAnyInterval   Int?
 
-  days             String[]
-  targetCount      Int?
-  unit             String?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  startAt          DateTime @default(now())
-  endAt            DateTime?
+  weeklyType         ChallengeItemRepeatType?
+  weeklyInterval     Int?
+  weeklyRest         Int?
+  weeklyAnyInterval  Int?
+  days               String[] @default([])
+
+  monthlyType        ChallengeItemRepeatType?
+  monthlyInterval    Int?
+  monthlyRest        Int?
+  monthlyAnyInterval Int?
+  dates              Int[]    @default([])
+  weeks              Int[]    @default([])
+
+  yearlyType         ChallengeItemRepeatType?
+  yearlyInterval     Int?
+  yearlyRest         Int?
+  yearlyAnyInterval  Int?
+  months             String[] @default([])
+
+  targetCount        Int?
+  unit               String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  startAt            DateTime @default(now())
+  endAt              DateTime?
 
   // Challenge relationship
   challengeId      String
@@ -78,7 +96,7 @@ enum ChallengeItemIntervalType {
   YEARLY
 }
 
-enum ChallengeItemDailyType {
+enum ChallengeItemRepeatType {
   EVERY
   N
   NM
