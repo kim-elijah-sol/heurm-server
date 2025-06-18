@@ -5,7 +5,40 @@ import { v } from '~/lib/validator';
 
 export const postChallengeItem = createAPI(
   async ({
-    body: { challengeId, name, type, days, unit, targetCount, startAt, endAt },
+    body: {
+      challengeId,
+      name,
+      type,
+      intervalType,
+
+      dailyType,
+      dailyInterval,
+      dailyRest,
+      dailyAnyInterval,
+
+      weeklyType,
+      weeklyInterval,
+      weeklyRest,
+      days,
+
+      monthlyType,
+      monthlyInterval,
+      monthlyRest,
+      dates,
+      weeks,
+
+      yearlyType,
+      yearlyInterval,
+      yearlyRest,
+      months,
+
+      targetCount,
+      unit,
+      accumulateType,
+
+      startAt,
+      endAt,
+    },
     userId,
     prismaClient,
   }) => {
@@ -28,9 +61,33 @@ export const postChallengeItem = createAPI(
         challengeId,
         name,
         type,
+        intervalType,
+
+        dailyType,
+        dailyInterval,
+        dailyRest,
+        dailyAnyInterval,
+
+        weeklyType,
+        weeklyInterval,
+        weeklyRest,
         days,
-        unit,
+
+        monthlyType,
+        monthlyInterval,
+        monthlyRest,
+        dates,
+        weeks,
+
+        yearlyType,
+        yearlyInterval,
+        yearlyRest,
+        months,
+
         targetCount,
+        unit,
+        accumulateType,
+
         startAt,
         endAt,
       },
@@ -48,9 +105,33 @@ export const postChallengeItem = createAPI(
       challengeId: t.String(),
       name: v.isChallengeItemName,
       type: v.isChallengeItemType,
-      days: v.isChallengeItemDays,
-      unit: t.Optional(t.Nullable(t.String())),
+      intervalType: v.isChallengeItemIntervalType,
+
+      dailyType: t.Optional(v.isChallengeItemDailyRepeatType),
+      dailyInterval: t.Optional(t.Nullable(t.Number())),
+      dailyRest: t.Optional(t.Nullable(t.Number())),
+      dailyAnyInterval: t.Optional(t.Nullable(t.Number())),
+
+      weeklyType: t.Optional(v.isChallengeItemNotDailyRepeatType),
+      weeklyInterval: t.Optional(t.Nullable(t.Number())),
+      weeklyRest: t.Optional(t.Nullable(t.Number())),
+      days: t.Optional(v.isChallengeItemDays),
+
+      monthlyType: t.Optional(v.isChallengeItemNotDailyRepeatType),
+      monthlyInterval: t.Optional(t.Nullable(t.Number())),
+      monthlyRest: t.Optional(t.Nullable(t.Number())),
+      dates: t.Optional(t.Array(t.Number())),
+      weeks: t.Optional(t.Array(t.Number())),
+
+      yearlyType: t.Optional(v.isChallengeItemNotDailyRepeatType),
+      yearlyInterval: t.Optional(t.Nullable(t.Number())),
+      yearlyRest: t.Optional(t.Nullable(t.Number())),
+      months: t.Optional(t.Array(t.String())),
+
       targetCount: t.Optional(t.Nullable(t.Number())),
+      unit: t.Optional(t.Nullable(t.String())),
+      accumulateType: t.Optional(t.Nullable(v.isChallengeItemIntervalType)),
+
       startAt: v.isDate,
       endAt: t.Optional(t.Nullable(v.isDate)),
     }),
