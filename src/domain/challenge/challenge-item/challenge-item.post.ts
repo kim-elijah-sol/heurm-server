@@ -11,25 +11,16 @@ export const postChallengeItem = createAPI(
       type,
       intervalType,
 
-      dailyType,
-      dailyInterval,
-      dailyRest,
-      dailyAnyInterval,
+      repeatType,
+      interval,
+      rest,
+      anyInterval,
 
-      weeklyType,
-      weeklyInterval,
-      weeklyRest,
       days,
 
-      monthlyType,
-      monthlyInterval,
-      monthlyRest,
       dates,
       weeks,
 
-      yearlyType,
-      yearlyInterval,
-      yearlyRest,
       months,
 
       targetCount,
@@ -62,32 +53,17 @@ export const postChallengeItem = createAPI(
         name,
         type,
         intervalType,
-
-        dailyType,
-        dailyInterval,
-        dailyRest,
-        dailyAnyInterval,
-
-        weeklyType,
-        weeklyInterval,
-        weeklyRest,
+        repeatType,
+        interval,
+        rest,
+        anyInterval,
         days,
-
-        monthlyType,
-        monthlyInterval,
-        monthlyRest,
         dates,
         weeks,
-
-        yearlyType,
-        yearlyInterval,
-        yearlyRest,
         months,
-
         targetCount,
         unit,
         accumulateType,
-
         startAt,
         endAt,
       },
@@ -107,25 +83,17 @@ export const postChallengeItem = createAPI(
       type: v.isChallengeItemType,
       intervalType: v.isChallengeItemIntervalType,
 
-      dailyType: t.Optional(v.isChallengeItemDailyRepeatType),
-      dailyInterval: t.Optional(t.Nullable(t.Number())),
-      dailyRest: t.Optional(t.Nullable(t.Number())),
-      dailyAnyInterval: t.Optional(t.Nullable(t.Number())),
+      repeatType: v.isChallengeItemRepeatType,
+      interval: t.Optional(t.Nullable(t.Number())),
+      rest: t.Optional(t.Nullable(t.Number())),
 
-      weeklyType: t.Optional(v.isChallengeItemNotDailyRepeatType),
-      weeklyInterval: t.Optional(t.Nullable(t.Number())),
-      weeklyRest: t.Optional(t.Nullable(t.Number())),
+      anyInterval: t.Optional(t.Nullable(t.Number())),
+
       days: t.Optional(v.isChallengeItemDays),
 
-      monthlyType: t.Optional(v.isChallengeItemNotDailyRepeatType),
-      monthlyInterval: t.Optional(t.Nullable(t.Number())),
-      monthlyRest: t.Optional(t.Nullable(t.Number())),
       dates: t.Optional(t.Array(t.Number())),
       weeks: t.Optional(t.Array(t.Number())),
 
-      yearlyType: t.Optional(v.isChallengeItemNotDailyRepeatType),
-      yearlyInterval: t.Optional(t.Nullable(t.Number())),
-      yearlyRest: t.Optional(t.Nullable(t.Number())),
       months: t.Optional(t.Array(t.String())),
 
       targetCount: t.Optional(t.Nullable(t.Number())),

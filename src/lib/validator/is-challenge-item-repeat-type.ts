@@ -1,6 +1,6 @@
 import { t } from 'elysia';
 
-export const isChallengeItemDailyRepeatType = t.Union([
+export const isChallengeItemRepeatType = t.Union([
   t.Literal('EVERY'),
   t.Literal('N'),
   t.Literal('NM'),
