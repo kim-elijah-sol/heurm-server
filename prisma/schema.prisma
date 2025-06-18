@@ -45,7 +45,7 @@ model ChallengeItem {
   dailyType        ChallengeItemDailyRepeatType?
   dailyInterval    Int?
   dailyRest        Int?
-  daliyAnyInterval Int?
+  dailyAnyInterval Int?
 
   weeklyType       ChallengeItemNotDailyRepeatType?
   weeklyInterval   Int?
