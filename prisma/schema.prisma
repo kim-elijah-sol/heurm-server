@@ -18,7 +18,6 @@ model User {
   updatedAt      DateTime @updatedAt
   profileImage   String?
 
-  // Challenge relationship
   challenges     Challenge[]
 }
 
@@ -29,58 +28,55 @@ model Challenge {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  // User relationship
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // ChallengeItem relationship
   items       ChallengeItem[]
 }
 
 model ChallengeItem {
-  id                 String   @id @default(cuid())
-  name               String
-  type               ChallengeItemType
+  id               String   @id @default(cuid())
+  name             String
 
-  intervalType       ChallengeItemIntervalType
+  type             ChallengeItemType
 
-  dailyType          ChallengeItemRepeatType?
-  dailyInterval      Int?
-  dailyRest          Int?
-  daliyAnyInterval   Int?
+  intervalType     ChallengeItemIntervalType
 
-  weeklyType         ChallengeItemRepeatType?
-  weeklyInterval     Int?
-  weeklyRest         Int?
-  weeklyAnyInterval  Int?
-  days               String[] @default([])
+  dailyType        ChallengeItemDailyRepeatType?
+  dailyInterval    Int?
+  dailyRest        Int?
+  daliyAnyInterval Int?
 
-  monthlyType        ChallengeItemRepeatType?
-  monthlyInterval    Int?
-  monthlyRest        Int?
-  monthlyAnyInterval Int?
-  dates              Int[]    @default([])
-  weeks              Int[]    @default([])
+  weeklyType       ChallengeItemNotDailyRepeatType?
+  weeklyInterval   Int?
+  weeklyRest       Int?
+  days             String[] @default([])
 
-  yearlyType         ChallengeItemRepeatType?
-  yearlyInterval     Int?
-  yearlyRest         Int?
-  yearlyAnyInterval  Int?
-  months             String[] @default([])
+  monthlyType      ChallengeItemNotDailyRepeatType?
+  monthlyInterval  Int?
+  monthlyRest      Int?
+  dates            Int[]    @default([])
+  weeks            Int[]    @default([])
 
-  targetCount        Int?
-  unit               String?
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-  startAt            DateTime @default(now())
-  endAt              DateTime?
+  yearlyType       ChallengeItemNotDailyRepeatType?
+  yearlyInterval   Int?
+  yearlyRest       Int?
+  months           String[] @default([])
 
-  // Challenge relationship
+  targetCount      Int?
+  unit             String?
+  accumulateType   ChallengeItemIntervalType?
+
+  startAt          DateTime @default(now())
+  endAt            DateTime?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
   challengeId      String
   challenge        Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
-
-  // ChallengeItemHistory relationship
-  history     ChallengeItemHistory[]
+  
+  history          ChallengeItemHistory[]
 }
 
 enum ChallengeItemType {
@@ -96,23 +92,28 @@ enum ChallengeItemIntervalType {
   YEARLY
 }
 
-enum ChallengeItemRepeatType {
+enum ChallengeItemDailyRepeatType {
   EVERY
   N
   NM
   ANY_N
 }
 
-model ChallengeItemHistory {
-  id          String   @id @default(cuid())
-  date        DateTime
-  complete    Boolean?
-  count       Int?
-  targetCount Int?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+enum ChallengeItemNotDailyRepeatType {
+  EVERY
+  N
+  NM
+}
 
-  // ChallengeItem relationship
+model ChallengeItemHistory {
+  id              String   @id @default(cuid())
+  date            DateTime
+  complete        Boolean?
+  count           Int?
+  targetCount     Int?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
   challengeItemId String
   challengeItem   ChallengeItem @relation(fields: [challengeItemId], references: [id], onDelete: Cascade)
 
