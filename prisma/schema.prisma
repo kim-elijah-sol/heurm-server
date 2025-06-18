@@ -42,25 +42,18 @@ model ChallengeItem {
 
   intervalType     ChallengeItemIntervalType
 
-  dailyType        ChallengeItemDailyRepeatType?
-  dailyInterval    Int?
-  dailyRest        Int?
-  dailyAnyInterval Int?
+  repeatType       ChallengeItemRepeatType
+  interval         Int?
+  rest             Int?
 
-  weeklyType       ChallengeItemNotDailyRepeatType?
-  weeklyInterval   Int?
-  weeklyRest       Int?
+  // only daily interval
+  anyInterval      Int?
+  // only weekly interval
   days             String[] @default([])
-
-  monthlyType      ChallengeItemNotDailyRepeatType?
-  monthlyInterval  Int?
-  monthlyRest      Int?
+  // only monthly interval
   dates            Int[]    @default([])
   weeks            Int[]    @default([])
-
-  yearlyType       ChallengeItemNotDailyRepeatType?
-  yearlyInterval   Int?
-  yearlyRest       Int?
+  // only yearly interval
   months           String[] @default([])
 
   targetCount      Int?
@@ -92,17 +85,11 @@ enum ChallengeItemIntervalType {
   YEARLY
 }
 
-enum ChallengeItemDailyRepeatType {
+enum ChallengeItemRepeatType {
   EVERY
   N
   NM
   ANY_N
-}
-
-enum ChallengeItemNotDailyRepeatType {
-  EVERY
-  N
-  NM
 }
 
 model ChallengeItemHistory {
