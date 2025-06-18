@@ -38,20 +38,28 @@ model Challenge {
 }
 
 model ChallengeItem {
-  id          String   @id @default(cuid())
-  name        String
-  type        ChallengeItemType
-  days        String[]
-  targetCount Int?
-  unit        String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  startAt     DateTime @default(now())
-  endAt       DateTime?
+  id               String   @id @default(cuid())
+  name             String
+  type             ChallengeItemType
+
+  intervalType     ChallengeItemIntervalType
+
+  dailyType        ChallengeItemDailyType?
+  dailyInterval    Int?
+  dailyRest        Int?
+  daliyAnyInterval Int?
+
+  days             String[]
+  targetCount      Int?
+  unit             String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  startAt          DateTime @default(now())
+  endAt            DateTime?
 
   // Challenge relationship
-  challengeId String
-  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  challengeId      String
+  challenge        Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
 
   // ChallengeItemHistory relationship
   history     ChallengeItemHistory[]
@@ -61,6 +69,20 @@ enum ChallengeItemType {
   COMPLETE
   OVER
   UNDER
+}
+
+enum ChallengeItemIntervalType {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+enum ChallengeItemDailyType {
+  EVERY
+  N
+  NM
+  ANY_N
 }
 
 model ChallengeItemHistory {
