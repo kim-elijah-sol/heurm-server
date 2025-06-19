@@ -5,7 +5,7 @@ import { v } from '~/lib/validator';
 
 export const patchHistory = createAPI(
   async ({
-    body: { challengeId, challengeItemId, id, complete, count, targetCount },
+    body: { challengeId, challengeItemId, id, complete, count },
     prismaClient,
     userId,
   }) => {
@@ -44,7 +44,6 @@ export const patchHistory = createAPI(
       data: {
         complete,
         count,
-        targetCount,
       },
     });
 
@@ -59,7 +58,6 @@ export const patchHistory = createAPI(
       id: t.String(),
       complete: v.isHistoryComplete,
       count: v.isHistoryCount,
-      targetCount: v.isHistoryTargetCount,
     }),
   }
 );
