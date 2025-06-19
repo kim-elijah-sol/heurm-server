@@ -2,6 +2,7 @@ import { app } from '~/app';
 import { challenge } from '~/domain/challenge';
 import { user } from '~/domain/user';
 import { guardAccessToken } from '~/lib/plugin';
+import { challengeItem } from './domain/challenge-item';
 import { history } from './domain/history';
 
 app
@@ -60,28 +61,28 @@ app
       .post('/', challenge.postChallenge, challenge.postChallenge.model)
       .patch('/', challenge.patchChallenge, challenge.patchChallenge.model)
       .delete('/', challenge.deleteChallenge, challenge.deleteChallenge.model)
-      .group('/challenge-item', (app) =>
-        app
-          .get(
-            '/',
-            challenge.challengeItem.getChallengeItem,
-            challenge.challengeItem.getChallengeItem.model
-          )
-          .post(
-            '/',
-            challenge.challengeItem.postChallengeItem,
-            challenge.challengeItem.postChallengeItem.model
-          )
-          .patch(
-            '/',
-            challenge.challengeItem.patchChallengeItem,
-            challenge.challengeItem.patchChallengeItem.model
-          )
-          .delete(
-            '/',
-            challenge.challengeItem.deleteChallengeItem,
-            challenge.challengeItem.deleteChallengeItem.model
-          )
+  )
+  .group('/challenge-item', (app) =>
+    app
+      .get(
+        '/',
+        challengeItem.getChallengeItem,
+        challengeItem.getChallengeItem.model
+      )
+      .post(
+        '/',
+        challengeItem.postChallengeItem,
+        challengeItem.postChallengeItem.model
+      )
+      .patch(
+        '/',
+        challengeItem.patchChallengeItem,
+        challengeItem.patchChallengeItem.model
+      )
+      .delete(
+        '/',
+        challengeItem.deleteChallengeItem,
+        challengeItem.deleteChallengeItem.model
       )
   )
   .group('/history', (app) =>

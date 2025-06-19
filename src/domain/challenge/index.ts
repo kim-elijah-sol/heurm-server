@@ -1,4 +1,3 @@
-import { challengeItem } from './challenge-item';
 import { deleteChallenge } from './challenge.delete';
 import { getChallenge } from './challenge.get';
 import { patchChallenge } from './challenge.patch';
@@ -9,6 +8,4 @@ export const challenge = {
   postChallenge,
   patchChallenge,
   deleteChallenge,
-
-  challengeItem,
 };
