@@ -9,8 +9,6 @@ import { isDate } from './is-date';
 import { isEmail } from './is-email';
 import { isHistoryComplete } from './is-history-complete';
 import { isHistoryCount } from './is-history-count';
-import { isHistoryTargetCount } from './is-history-target-count';
-import { isName } from './is-name';
 import { isPassword } from './is-password';
 import { isVerifyCode } from './is-verify-code';
 
@@ -18,7 +16,6 @@ export const v = {
   isEmail,
   isVerifyCode,
   isPassword,
-  isName,
   isChallengeTitle,
   isChallengeColor,
   isDate,
@@ -27,7 +24,6 @@ export const v = {
   isChallengeItemDays,
   isHistoryComplete,
   isHistoryCount,
-  isHistoryTargetCount,
   isChallengeItemIntervalType,
   isChallengeItemRepeatType,
 };

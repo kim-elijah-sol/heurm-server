@@ -78,7 +78,9 @@ export const patchProfile = createAPI(
   },
   {
     body: t.Object({
-      name: v.isName,
+      name: t.String({
+        minLength: 2,
+      }),
       profileFile: t.Optional(t.Nullable(t.File({ format: 'image/*' }))),
       currentPassword: t.Optional(t.Nullable(v.isPassword)),
       newPassword: t.Optional(t.Nullable(v.isPassword)),
