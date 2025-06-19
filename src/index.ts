@@ -60,14 +60,8 @@ app
       .post('/', challenge.postChallenge, challenge.postChallenge.model)
       .patch('/', challenge.patchChallenge, challenge.patchChallenge.model)
       .delete('/', challenge.deleteChallenge, challenge.deleteChallenge.model)
-      .get('/overview', challenge.getOverview, challenge.getOverview.model)
       .group('/challenge-item', (app) =>
         app
-          .get(
-            '/by-date',
-            challenge.challengeItem.getChallengeItemByDate,
-            challenge.challengeItem.getChallengeItemByDate.model
-          )
           .get(
             '/',
             challenge.challengeItem.getChallengeItem,
@@ -94,7 +88,6 @@ app
     app
       .post('/', history.postHistory, history.postHistory.model)
       .patch('/', history.patchHistory, history.patchHistory.model)
-      .get('/by-week', history.getByWeek, history.getByWeek.model)
   );
 
 app.listen(3000, () => {
