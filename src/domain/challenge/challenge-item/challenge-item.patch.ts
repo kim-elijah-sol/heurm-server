@@ -1,6 +1,4 @@
-import { fromZonedTime } from 'date-fns-tz';
 import { t } from 'elysia';
-import { getUserTimezone } from '~/lib/cache';
 import { createAPI } from '~/lib/create-api';
 import { BadRequestError } from '~/lib/error';
 import { v } from '~/lib/validator';
@@ -11,19 +9,30 @@ export const patchChallengeItem = createAPI(
       challengeId,
       challengeItemId,
       name,
-      type,
+      intervalType,
+
+      repeatType,
+      interval,
+      rest,
+      anyInterval,
+
       days,
-      date: _date,
-      unit,
+
+      dates,
+      weeks,
+
+      months,
+
       targetCount,
+      unit,
+      accumulateType,
+
       startAt,
       endAt,
     },
     userId,
     prismaClient,
   }) => {
-    const userTimezone = await getUserTimezone(userId!);
-
     const challenge = await prismaClient.challenge.findUnique({
       where: {
         id: challengeId,
@@ -38,24 +47,6 @@ export const patchChallengeItem = createAPI(
       throw new BadRequestError('can not find challenge data');
     }
 
-    if (
-      type !== 'COMPLETE' &&
-      targetCount !== null &&
-      targetCount !== undefined
-    ) {
-      const date = fromZonedTime(new Date(`${_date} 00:00:00`), userTimezone);
-
-      await prismaClient.challengeItemHistory.updateMany({
-        where: {
-          challengeItemId,
-          date,
-        },
-        data: {
-          targetCount,
-        },
-      });
-    }
-
     await prismaClient.challengeItem.update({
       where: {
         challengeId,
@@ -63,10 +54,24 @@ export const patchChallengeItem = createAPI(
       },
       data: {
         name,
-        type,
+        intervalType,
+
+        repeatType,
+        interval,
+        rest,
+        anyInterval,
+
         days,
-        unit,
+
+        dates,
+        weeks,
+
+        months,
+
         targetCount,
+        unit,
+        accumulateType,
+
         startAt,
         endAt,
       },
@@ -81,11 +86,25 @@ export const patchChallengeItem = createAPI(
       challengeId: t.String(),
       challengeItemId: t.String(),
       name: v.isChallengeItemName,
-      type: v.isChallengeItemType,
-      days: v.isChallengeItemDays,
-      date: v.isDate,
-      unit: t.Optional(t.Nullable(t.String())),
+      intervalType: v.isChallengeItemIntervalType,
+
+      repeatType: v.isChallengeItemRepeatType,
+      interval: t.Optional(t.Nullable(t.Number())),
+      rest: t.Optional(t.Nullable(t.Number())),
+
+      anyInterval: t.Optional(t.Nullable(t.Number())),
+
+      days: t.Optional(v.isChallengeItemDays),
+
+      dates: t.Optional(t.Array(t.Number())),
+      weeks: t.Optional(t.Array(t.Number())),
+
+      months: t.Optional(t.Array(t.String())),
+
       targetCount: t.Optional(t.Nullable(t.Number())),
+      unit: t.Optional(t.Nullable(t.String())),
+      accumulateType: t.Optional(t.Nullable(v.isChallengeItemIntervalType)),
+
       startAt: v.isDate,
       endAt: t.Optional(t.Nullable(v.isDate)),
     }),
