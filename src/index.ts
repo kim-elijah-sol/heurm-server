@@ -89,6 +89,7 @@ app
     app
       .post('/', history.postHistory, history.postHistory.model)
       .patch('/', history.patchHistory, history.patchHistory.model)
+      .get('/', history.getHistory, history.getHistory.model)
   );
 
 app.listen(3000, () => {
