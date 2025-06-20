@@ -12,9 +12,8 @@ export const patchChallengeItem = createAPI(
       intervalType,
 
       repeatType,
-      interval,
+      repeat,
       rest,
-      anyInterval,
 
       days,
 
@@ -57,9 +56,8 @@ export const patchChallengeItem = createAPI(
         intervalType,
 
         repeatType,
-        interval,
+        repeat,
         rest,
-        anyInterval,
 
         days,
 
@@ -89,10 +87,8 @@ export const patchChallengeItem = createAPI(
       intervalType: v.isChallengeItemIntervalType,
 
       repeatType: v.isChallengeItemRepeatType,
-      interval: t.Optional(t.Nullable(t.Number())),
+      repeat: t.Optional(t.Nullable(t.Number())),
       rest: t.Optional(t.Nullable(t.Number())),
-
-      anyInterval: t.Optional(t.Nullable(t.Number())),
 
       days: t.Optional(v.isChallengeItemDays),
 
