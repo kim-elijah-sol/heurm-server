@@ -12,9 +12,8 @@ export const postChallengeItem = createAPI(
       intervalType,
 
       repeatType,
-      interval,
+      repeat,
       rest,
-      anyInterval,
 
       days,
 
@@ -54,9 +53,8 @@ export const postChallengeItem = createAPI(
         type,
         intervalType,
         repeatType,
-        interval,
+        repeat,
         rest,
-        anyInterval,
         days,
         dates,
         weeks,
@@ -84,10 +82,8 @@ export const postChallengeItem = createAPI(
       intervalType: v.isChallengeItemIntervalType,
 
       repeatType: v.isChallengeItemRepeatType,
-      interval: t.Optional(t.Nullable(t.Number())),
+      repeat: t.Optional(t.Nullable(t.Number())),
       rest: t.Optional(t.Nullable(t.Number())),
-
-      anyInterval: t.Optional(t.Nullable(t.Number())),
 
       days: t.Optional(v.isChallengeItemDays),
 
