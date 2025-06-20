@@ -1,5 +1,10 @@
 # Win Yourself Server Journal
 
+# 2025-06-20
+
+일단 interval 과 repeat 에 대한 entity 를 추가했다.<br>
+명칭은 무지성으로 한 것 같아 다시 설정해보기로 하고, 웬만한 interval 을 가질 수 있도록 확장성있게 만드는게 중요했다.
+
 # 2025-06-18
 
 이런 이런 다른 데일리 루틴 앱을 살펴보니 진짜 별에별 interval 기능을 제공하더라<br>
