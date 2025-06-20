@@ -45,3 +45,5 @@ goorm.manifest
 .cron.sh
 
 /uploads
+
+.start.sh
