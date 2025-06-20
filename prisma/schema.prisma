@@ -43,11 +43,9 @@ model ChallengeItem {
   intervalType     ChallengeItemIntervalType
 
   repeatType       ChallengeItemRepeatType
-  interval         Int?
+  repeat           Int?
   rest             Int?
 
-  // only daily interval
-  anyInterval      Int?
   // only weekly interval
   days             String[] @default([])
   // only monthly interval
@@ -89,7 +87,6 @@ enum ChallengeItemRepeatType {
   EVERY
   N
   NM
-  ANY_N
 }
 
 model ChallengeItemHistory {
