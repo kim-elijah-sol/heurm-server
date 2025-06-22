@@ -1,5 +1,4 @@
 import { isChallengeColor } from './is-challenge-color';
-import { isChallengeItemDays } from './is-challenge-item-days';
 import { isChallengeItemIntervalType } from './is-challenge-item-interval-type';
 import { isChallengeItemName } from './is-challenge-item-name';
 import { isChallengeItemRepeatType } from './is-challenge-item-repeat-type';
@@ -21,7 +20,6 @@ export const v = {
   isDate,
   isChallengeItemName,
   isChallengeItemType,
-  isChallengeItemDays,
   isHistoryComplete,
   isHistoryCount,
   isChallengeItemIntervalType,

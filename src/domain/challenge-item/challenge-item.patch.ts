@@ -90,12 +90,12 @@ export const patchChallengeItem = createAPI(
       repeat: t.Optional(t.Nullable(t.Number())),
       rest: t.Optional(t.Nullable(t.Number())),
 
-      days: t.Optional(v.isChallengeItemDays),
+      days: t.Optional(t.Array(t.Number())),
 
       dates: t.Optional(t.Array(t.Number())),
       weeks: t.Optional(t.Array(t.Number())),
 
-      months: t.Optional(t.Array(t.String())),
+      months: t.Optional(t.Array(t.Number())),
 
       targetCount: t.Optional(t.Nullable(t.Number())),
       unit: t.Optional(t.Nullable(t.String())),
