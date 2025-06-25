@@ -11,6 +11,7 @@ export const patchChallengeItem = createAPI(
       challengeId,
       challengeItemId,
       name,
+      type,
       intervalType,
 
       repeatType,
@@ -57,6 +58,7 @@ export const patchChallengeItem = createAPI(
       },
       data: {
         name,
+        type,
         intervalType,
 
         repeatType,
@@ -90,6 +92,7 @@ export const patchChallengeItem = createAPI(
       challengeId: t.String(),
       challengeItemId: t.String(),
       name: v.isChallengeItemName,
+      type: v.isChallengeItemType,
       intervalType: v.isChallengeItemIntervalType,
 
       repeatType: v.isChallengeItemRepeatType,
