@@ -7,7 +7,7 @@ import { v } from '~/lib/validator';
 
 export const postHistory = createAPI(
   async ({
-    body: { challengeId, challengeItemId, date: _date, complete, count },
+    body: { challengeId, challengeItemId, date: _date, complete, count, type },
     prismaClient,
     userId,
   }) => {
@@ -46,6 +46,7 @@ export const postHistory = createAPI(
     const result = await prismaClient.challengeItemHistory.create({
       data: {
         challengeItemId,
+        type,
         date,
         complete,
         count,
@@ -63,6 +64,7 @@ export const postHistory = createAPI(
       date: v.isDate,
       complete: v.isHistoryComplete,
       count: v.isHistoryCount,
+      type: v.isChallengeItemType,
     }),
   }
 );
