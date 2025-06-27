@@ -101,5 +101,5 @@ model ChallengeItemHistory {
   challengeItemId String
   challengeItem   ChallengeItem @relation(fields: [challengeItemId], references: [id], onDelete: Cascade)
 
-  @@unique([challengeItemId, date])
+  @@unique([challengeItemId, date, type])
 }
