@@ -94,6 +94,7 @@ model ChallengeItemHistory {
   date            DateTime
   complete        Boolean?
   count           Int?
+  type            ChallengeItemType
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
