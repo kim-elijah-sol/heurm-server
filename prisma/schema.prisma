@@ -49,8 +49,8 @@ model ChallengeItem {
   // only weekly interval
   days             Int[] @default([])
   // only monthly interval
-  dates            Int[]    @default([])
-  weeks            Int[]    @default([])
+  dates            Int[] @default([])
+  weeks            Int[] @default([])
   // only yearly interval
   months           Int[] @default([])
 
@@ -60,6 +60,9 @@ model ChallengeItem {
 
   startAt          DateTime @default(now())
   endAt            DateTime?
+
+  startTime        Int?
+  endTime          Int?
 
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
