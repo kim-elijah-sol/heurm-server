@@ -1,9 +1,13 @@
+import { toZonedTime } from 'date-fns-tz';
 import { t } from 'elysia';
+import { getUserTimezone } from '~/lib/cache';
 import { createAPI } from '~/lib/create-api';
 import { BadRequestError } from '~/lib/error';
 
 export const getHistory = createAPI(
   async ({ query: { challengeId, challengeItemId }, prismaClient, userId }) => {
+    const userTimezone = await getUserTimezone(userId!);
+
     const challengeItemTypeResult = await prismaClient.challengeItem.findUnique(
       {
         where: {
@@ -52,7 +56,10 @@ export const getHistory = createAPI(
 
     const historys = result.items[0]?.history ?? [];
 
-    return historys;
+    return historys.map((it) => ({
+      ...it,
+      date: toZonedTime(it.date, userTimezone),
+    }));
   },
   {
     query: t.Object({
