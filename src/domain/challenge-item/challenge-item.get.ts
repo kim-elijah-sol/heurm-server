@@ -43,6 +43,8 @@ export const getChallengeItem = createAPI(
         accumulateType: true,
         startAt: true,
         endAt: true,
+        startTime: true,
+        endTime: true,
       },
       orderBy: {
         createdAt: 'desc',
