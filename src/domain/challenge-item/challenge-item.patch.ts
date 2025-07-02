@@ -31,6 +31,9 @@ export const patchChallengeItem = createAPI(
 
       startAt,
       endAt,
+
+      startTime,
+      endTime,
     },
     userId,
     prismaClient,
@@ -80,6 +83,9 @@ export const patchChallengeItem = createAPI(
         endAt: endAt
           ? fromZonedTime(new Date(`${endAt} 23:59:59`), userTimezone)
           : null,
+
+        startTime,
+        endTime,
       },
     });
 
@@ -112,6 +118,9 @@ export const patchChallengeItem = createAPI(
 
       startAt: v.isDate,
       endAt: t.Optional(t.Nullable(v.isDate)),
+
+      startTime: t.Optional(t.Nullable(t.Number())),
+      endTime: t.Optional(t.Nullable(t.Number())),
     }),
   }
 );
