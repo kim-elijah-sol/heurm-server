@@ -5,46 +5,32 @@ import { createAPI } from '~/lib/create-api';
 import { BadRequestError } from '~/lib/error';
 
 export const getHistory = createAPI(
-  async ({ query: { challengeId, challengeItemId }, prismaClient, userId }) => {
+  async ({ query: { flowId }, prismaClient, userId }) => {
     const userTimezone = await getUserTimezone(userId!);
 
-    const challengeItemTypeResult = await prismaClient.challengeItem.findUnique(
-      {
-        where: {
-          id: challengeItemId,
-          challengeId,
-        },
-        select: {
-          type: true,
-        },
-      }
-    );
-
-    const challengeItemType = challengeItemTypeResult?.type;
-
-    const result = await prismaClient.challenge.findUnique({
+    const flowTypeResult = await prismaClient.flow.findUnique({
       where: {
-        id: challengeId,
+        id: flowId,
         userId,
       },
       select: {
-        items: {
+        type: true,
+      },
+    });
+
+    const flowType = flowTypeResult?.type;
+
+    const result = await prismaClient.flow.findUnique({
+      where: {
+        id: flowId,
+        userId,
+      },
+      select: {
+        history: {
+          select: { id: true, count: true, complete: true, date: true },
           where: {
-            id: challengeItemId,
-          },
-          select: {
-            history: {
-              select: {
-                id: true,
-                count: true,
-                complete: true,
-                date: true,
-              },
-              where: {
-                challengeItemId,
-                type: challengeItemType,
-              },
-            },
+            flowId,
+            type: flowType,
           },
         },
       },
@@ -54,7 +40,7 @@ export const getHistory = createAPI(
       throw new BadRequestError('can not find challenge data');
     }
 
-    const historys = result.items[0]?.history ?? [];
+    const historys = result.history ?? [];
 
     return historys.map((it) => ({
       ...it,
@@ -63,8 +49,7 @@ export const getHistory = createAPI(
   },
   {
     query: t.Object({
-      challengeId: t.String(),
-      challengeItemId: t.String(),
+      flowId: t.String(),
     }),
   }
 );
