@@ -1,4 +1,10 @@
-# Win Yourself Server Journal
+# Heurm Server Journal
+
+# 2025-07-03
+
+앱 명이 Win Yourself 는 너무 긴 것 같아서 "Heurm" 으로 변경했다.<br>
+테이블명은 Challenge -> Flow 로 변경해야 할 예정이고,<br>
+그룹을 제거할 예정이다.
 
 # 2025-06-20
 
