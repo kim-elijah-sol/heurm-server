@@ -4,14 +4,10 @@ import { BadRequestError } from '~/lib/error';
 import { v } from '~/lib/validator';
 
 export const patchHistory = createAPI(
-  async ({
-    body: { challengeId, challengeItemId, id, complete, count },
-    prismaClient,
-    userId,
-  }) => {
-    const challenge = await prismaClient.challenge.findUnique({
+  async ({ body: { flowId, id, complete, count }, prismaClient, userId }) => {
+    const flow = await prismaClient.flow.findUnique({
       where: {
-        id: challengeId,
+        id: flowId,
         userId,
       },
       select: {
@@ -19,25 +15,11 @@ export const patchHistory = createAPI(
       },
     });
 
-    if (challenge == null) {
-      throw new BadRequestError('can not find challenge data');
+    if (flow == null) {
+      throw new BadRequestError('can not find flow data');
     }
 
-    const challengeItem = await prismaClient.challengeItem.findUnique({
-      where: {
-        id: challengeItemId,
-        challengeId: challenge.id,
-      },
-      select: {
-        id: true,
-      },
-    });
-
-    if (challengeItem == null) {
-      throw new BadRequestError('can not find challenge item data');
-    }
-
-    const result = await prismaClient.challengeItemHistory.update({
+    const result = await prismaClient.flowHistory.update({
       where: {
         id,
       },
@@ -53,8 +35,7 @@ export const patchHistory = createAPI(
   },
   {
     body: t.Object({
-      challengeId: t.String(),
-      challengeItemId: t.String(),
+      flowId: t.String(),
       id: t.String(),
       complete: v.isHistoryComplete,
       count: v.isHistoryCount,
