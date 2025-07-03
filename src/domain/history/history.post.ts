@@ -7,15 +7,15 @@ import { v } from '~/lib/validator';
 
 export const postHistory = createAPI(
   async ({
-    body: { challengeId, challengeItemId, date: _date, complete, count, type },
+    body: { flowId, date: _date, complete, count, type },
     prismaClient,
     userId,
   }) => {
     const userTimezone = await getUserTimezone(userId!);
 
-    const challenge = await prismaClient.challenge.findUnique({
+    const flow = await prismaClient.flow.findUnique({
       where: {
-        id: challengeId,
+        id: flowId,
         userId,
       },
       select: {
@@ -23,29 +23,15 @@ export const postHistory = createAPI(
       },
     });
 
-    if (challenge == null) {
-      throw new BadRequestError('can not find challenge data');
-    }
-
-    const challengeItem = await prismaClient.challengeItem.findUnique({
-      where: {
-        id: challengeItemId,
-        challengeId: challenge.id,
-      },
-      select: {
-        id: true,
-      },
-    });
-
-    if (challengeItem == null) {
-      throw new BadRequestError('can not find challenge item data');
+    if (flow == null) {
+      throw new BadRequestError('can not find flow data');
     }
 
     const date = fromZonedTime(new Date(`${_date} 00:00:00`), userTimezone);
 
-    const result = await prismaClient.challengeItemHistory.create({
+    const result = await prismaClient.flowHistory.create({
       data: {
-        challengeItemId,
+        flowId,
         type,
         date,
         complete,
@@ -59,8 +45,7 @@ export const postHistory = createAPI(
   },
   {
     body: t.Object({
-      challengeId: t.String(),
-      challengeItemId: t.String(),
+      flowId: t.String(),
       date: v.isDate,
       complete: v.isHistoryComplete,
       count: v.isHistoryCount,
