@@ -11,6 +11,4 @@ const colors = [
   'pink',
 ] as const;
 
-export const isChallengeColor = t.Union(
-  colors.map((color) => t.Literal(color))
-);
+export const isFlowColor = t.Union(colors.map((color) => t.Literal(color)));

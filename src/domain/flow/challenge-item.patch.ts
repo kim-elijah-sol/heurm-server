@@ -97,11 +97,11 @@ export const patchChallengeItem = createAPI(
     body: t.Object({
       challengeId: t.String(),
       challengeItemId: t.String(),
-      name: v.isChallengeItemName,
-      type: v.isChallengeItemType,
-      intervalType: v.isChallengeItemIntervalType,
+      name: v.isFlowName,
+      type: v.isFlowType,
+      intervalType: v.isFlowIntervalType,
 
-      repeatType: v.isChallengeItemRepeatType,
+      repeatType: v.isFlowRepeatType,
       repeat: t.Optional(t.Nullable(t.Number())),
       rest: t.Optional(t.Nullable(t.Number())),
 
@@ -114,7 +114,7 @@ export const patchChallengeItem = createAPI(
 
       targetCount: t.Optional(t.Nullable(t.Number())),
       unit: t.Optional(t.Nullable(t.String())),
-      accumulateType: t.Optional(t.Nullable(v.isChallengeItemIntervalType)),
+      accumulateType: t.Optional(t.Nullable(v.isFlowIntervalType)),
 
       startAt: v.isDate,
       endAt: t.Optional(t.Nullable(v.isDate)),

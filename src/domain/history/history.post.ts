@@ -64,7 +64,7 @@ export const postHistory = createAPI(
       date: v.isDate,
       complete: v.isHistoryComplete,
       count: v.isHistoryCount,
-      type: v.isChallengeItemType,
+      type: v.isFlowType,
     }),
   }
 );

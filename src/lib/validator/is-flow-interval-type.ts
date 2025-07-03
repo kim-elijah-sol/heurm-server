@@ -1,6 +1,6 @@
 import { t } from 'elysia';
 
-export const isChallengeItemIntervalType = t.Union([
+export const isFlowIntervalType = t.Union([
   t.Literal('DAILY'),
   t.Literal('WEEKLY'),
   t.Literal('MONTHLY'),
