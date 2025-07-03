@@ -18,31 +18,18 @@ model User {
   updatedAt      DateTime @updatedAt
   profileImage   String?
 
-  challenges     Challenge[]
+  flows          Flow[]
 }
 
-model Challenge {
-  id          String   @id @default(cuid())
-  title       String
-  color       String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  items       ChallengeItem[]
-}
-
-model ChallengeItem {
+model Flow {
   id               String   @id @default(cuid())
   name             String
 
-  type             ChallengeItemType
+  type             FlowType
 
-  intervalType     ChallengeItemIntervalType
+  intervalType     FlowIntervalType
 
-  repeatType       ChallengeItemRepeatType
+  repeatType       FlowRepeatType
   repeat           Int?
   rest             Int?
 
@@ -56,7 +43,7 @@ model ChallengeItem {
 
   targetCount      Int?
   unit             String?
-  accumulateType   ChallengeItemIntervalType?
+  accumulateType   FlowIntervalType?
 
   startAt          DateTime @default(now())
   endAt            DateTime?
@@ -67,42 +54,42 @@ model ChallengeItem {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
-  challengeId      String
-  challenge        Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  userId           String
+  user             User @relation(fields: [userId], references: [id], onDelete: Cascade)
   
-  history          ChallengeItemHistory[]
+  history          FlowHistory[]
 }
 
-enum ChallengeItemType {
+enum FlowType {
   COMPLETE
   OVER
   UNDER
 }
 
-enum ChallengeItemIntervalType {
+enum FlowIntervalType {
   DAILY
   WEEKLY
   MONTHLY
   YEARLY
 }
 
-enum ChallengeItemRepeatType {
+enum FlowRepeatType {
   EVERY
   N
   NM
 }
 
-model ChallengeItemHistory {
+model FlowHistory {
   id              String   @id @default(cuid())
   date            DateTime
   complete        Boolean?
   count           Int?
-  type            ChallengeItemType
+  type            FlowType
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
-  challengeItemId String
-  challengeItem   ChallengeItem @relation(fields: [challengeItemId], references: [id], onDelete: Cascade)
+  flowId          String
+  flow            Flow @relation(fields: [flowId], references: [id], onDelete: Cascade)
 
-  @@unique([challengeItemId, date, type])
+  @@unique([flowId, date, type])
 }
