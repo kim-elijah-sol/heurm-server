@@ -57,7 +57,7 @@ app
   .group('/flow', (app) =>
     app
       .get('/', flow.getFlow, flow.getFlow.model)
-      .post('/', flow.postChallengeItem, flow.postChallengeItem.model)
+      .post('/', flow.postFlow, flow.postFlow.model)
       .patch('/', flow.patchChallengeItem, flow.patchChallengeItem.model)
       .delete('/', flow.deleteChallengeItem, flow.deleteChallengeItem.model)
   )

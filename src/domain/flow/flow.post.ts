@@ -2,13 +2,11 @@ import { fromZonedTime } from 'date-fns-tz';
 import { t } from 'elysia';
 import { getUserTimezone } from '~/lib/cache';
 import { createAPI } from '~/lib/create-api';
-import { BadRequestError } from '~/lib/error';
 import { v } from '~/lib/validator';
 
-export const postChallengeItem = createAPI(
+export const postFlow = createAPI(
   async ({
     body: {
-      challengeId,
       name,
       type,
       intervalType,
@@ -39,23 +37,9 @@ export const postChallengeItem = createAPI(
   }) => {
     const userTimezone = await getUserTimezone(userId!);
 
-    const challenge = await prismaClient.challenge.findUnique({
-      where: {
-        id: challengeId,
-        userId,
-      },
-      select: {
-        id: true,
-      },
-    });
-
-    if (challenge == null) {
-      throw new BadRequestError('can not find challenge data');
-    }
-
-    const result = await prismaClient.challengeItem.create({
+    const result = await prismaClient.flow.create({
       data: {
-        challengeId,
+        userId: userId!,
         name,
         type,
         intervalType,
@@ -88,7 +72,6 @@ export const postChallengeItem = createAPI(
   },
   {
     body: t.Object({
-      challengeId: t.String(),
       name: v.isFlowName,
       type: v.isFlowType,
       intervalType: v.isFlowIntervalType,
