@@ -1,8 +1,7 @@
 import { app } from '~/app';
-import { challenge } from '~/domain/challenge';
 import { user } from '~/domain/user';
 import { guardAccessToken } from '~/lib/plugin';
-import { challengeItem } from './domain/challenge-item';
+import { flow } from './domain/flow';
 import { history } from './domain/history';
 
 app
@@ -55,35 +54,12 @@ app
       .get('/profile', user.getProfile, user.getProfile.model)
       .patch('/profile', user.patchProfile, user.patchProfile.model)
   )
-  .group('/challenge', (app) =>
+  .group('/flow', (app) =>
     app
-      .get('/', challenge.getChallenge, challenge.getChallenge.model)
-      .post('/', challenge.postChallenge, challenge.postChallenge.model)
-      .patch('/', challenge.patchChallenge, challenge.patchChallenge.model)
-      .delete('/', challenge.deleteChallenge, challenge.deleteChallenge.model)
-  )
-  .group('/challenge-item', (app) =>
-    app
-      .get(
-        '/',
-        challengeItem.getChallengeItem,
-        challengeItem.getChallengeItem.model
-      )
-      .post(
-        '/',
-        challengeItem.postChallengeItem,
-        challengeItem.postChallengeItem.model
-      )
-      .patch(
-        '/',
-        challengeItem.patchChallengeItem,
-        challengeItem.patchChallengeItem.model
-      )
-      .delete(
-        '/',
-        challengeItem.deleteChallengeItem,
-        challengeItem.deleteChallengeItem.model
-      )
+      .get('/', flow.getFlow, flow.getFlow.model)
+      .post('/', flow.postChallengeItem, flow.postChallengeItem.model)
+      .patch('/', flow.patchChallengeItem, flow.patchChallengeItem.model)
+      .delete('/', flow.deleteChallengeItem, flow.deleteChallengeItem.model)
   )
   .group('/history', (app) =>
     app
