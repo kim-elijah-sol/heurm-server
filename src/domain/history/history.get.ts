@@ -37,7 +37,7 @@ export const getHistory = createAPI(
     });
 
     if (!result) {
-      throw new BadRequestError('can not find challenge data');
+      throw new BadRequestError('can not find flow data');
     }
 
     const historys = result.history ?? [];
