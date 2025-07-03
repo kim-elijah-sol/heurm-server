@@ -58,7 +58,7 @@ app
     app
       .get('/', flow.getFlow, flow.getFlow.model)
       .post('/', flow.postFlow, flow.postFlow.model)
-      .patch('/', flow.patchChallengeItem, flow.patchChallengeItem.model)
+      .patch('/', flow.patchFlow, flow.patchFlow.model)
       .delete('/', flow.deleteChallengeItem, flow.deleteChallengeItem.model)
   )
   .group('/history', (app) =>
