@@ -9,6 +9,7 @@ export const postFlow = createAPI(
     body: {
       name,
       type,
+      color,
       intervalType,
 
       repeatType,
@@ -42,6 +43,7 @@ export const postFlow = createAPI(
         userId: userId!,
         name,
         type,
+        color,
         intervalType,
         repeatType,
         repeat,
@@ -74,6 +76,7 @@ export const postFlow = createAPI(
     body: t.Object({
       name: v.isFlowName,
       type: v.isFlowType,
+      color: v.isFlowColor,
       intervalType: v.isFlowIntervalType,
 
       repeatType: v.isFlowRepeatType,
