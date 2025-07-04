@@ -12,6 +12,7 @@ export const getFlow = createAPI(async ({ prismaClient, userId }) => {
     select: {
       id: true,
       name: true,
+      color: true,
       type: true,
       intervalType: true,
       repeatType: true,
