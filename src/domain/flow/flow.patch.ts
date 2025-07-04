@@ -10,6 +10,7 @@ export const patchFlow = createAPI(
       flowId,
       name,
       type,
+      color,
       intervalType,
 
       repeatType,
@@ -44,6 +45,7 @@ export const patchFlow = createAPI(
       },
       data: {
         name,
+        color,
         type,
         intervalType,
 
@@ -82,6 +84,7 @@ export const patchFlow = createAPI(
 
       name: v.isFlowName,
       type: v.isFlowType,
+      color: v.isFlowColor,
       intervalType: v.isFlowIntervalType,
 
       repeatType: v.isFlowRepeatType,
