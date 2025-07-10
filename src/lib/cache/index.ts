@@ -1,1 +1,1 @@
-export * from './getUserTimezone';
+export * from './get-user-timezone';
