@@ -74,6 +74,7 @@ app
       .post('/', wave.postWave, wave.postWave.model)
       .patch('/', wave.patchWave, wave.patchWave.model)
       .get('/', wave.getWave, wave.getWave.model)
+      .delete('/', wave.deleteWave, wave.deleteWave.model)
   )
   .group('/flow-wave', (app) =>
     app.post('/', flowWave.postFlowWave, flowWave.postFlowWave.model)
