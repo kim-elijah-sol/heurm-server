@@ -72,6 +72,7 @@ app
   .group('/wave', (app) =>
     app
       .post('/', wave.postWave, wave.postWave.model)
+      .patch('/', wave.patchWave, wave.patchWave.model)
       .get('/', wave.getWave, wave.getWave.model)
   )
   .group('/flow-wave', (app) =>
