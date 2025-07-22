@@ -3,6 +3,7 @@ import { user } from '~/domain/user';
 import { guardAccessToken } from '~/lib/plugin';
 import { flow } from './domain/flow';
 import { history } from './domain/history';
+import { wave } from './domain/wave';
 
 app
   .get('/uploads/:fileName', ({ params }) =>
@@ -66,7 +67,8 @@ app
       .post('/', history.postHistory, history.postHistory.model)
       .patch('/', history.patchHistory, history.patchHistory.model)
       .get('/', history.getHistory, history.getHistory.model)
-  );
+  )
+  .group('/wave', (app) => app.post('/', wave.postWave, wave.postWave.model));
 
 app.listen(3000, () => {
   console.log('[Heurm]:: Server Start 3000 port');
