@@ -19,6 +19,7 @@ model User {
   profileImage   String?
 
   flows          Flow[]
+  waves          Wave[]
 }
 
 model Flow {
@@ -97,15 +98,18 @@ model FlowHistory {
 }
 
 model Wave {
-  id     String   @id @default(cuid())
-  name   String   @unique
-  flow  FlowWave[]
+  id      String     @id @default(cuid())
+  userId  String
+  name    String     @unique
+
+  user    User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  flow    FlowWave[]
 }
 
 model FlowWave {
-  flowId String
+  flowId  String
   waveId  String
-  flow   Flow   @relation(fields: [flowId], references: [id], onDelete: Cascade)
+  flow    Flow    @relation(fields: [flowId], references: [id], onDelete: Cascade)
   wave    Wave    @relation(fields: [waveId], references: [id], onDelete: Cascade)
 
   @@id([flowId, waveId])
