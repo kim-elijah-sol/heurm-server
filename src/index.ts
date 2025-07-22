@@ -68,7 +68,11 @@ app
       .patch('/', history.patchHistory, history.patchHistory.model)
       .get('/', history.getHistory, history.getHistory.model)
   )
-  .group('/wave', (app) => app.post('/', wave.postWave, wave.postWave.model));
+  .group('/wave', (app) =>
+    app
+      .post('/', wave.postWave, wave.postWave.model)
+      .get('/', wave.getWave, wave.getWave.model)
+  );
 
 app.listen(3000, () => {
   console.log('[Heurm]:: Server Start 3000 port');
