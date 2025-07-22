@@ -29,6 +29,18 @@ export const getFlow = createAPI(async ({ prismaClient, userId }) => {
       endAt: true,
       startTime: true,
       endTime: true,
+
+      wave: {
+        select: {
+          waveId: true,
+
+          wave: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
     },
     orderBy: {
       createdAt: 'desc',
@@ -39,5 +51,9 @@ export const getFlow = createAPI(async ({ prismaClient, userId }) => {
     ...it,
     startAt: toZonedTime(it.startAt, userTimezone),
     endAt: it.endAt ? toZonedTime(it.endAt, userTimezone) : null,
+    wave: it.wave.map((wave) => ({
+      id: wave.waveId,
+      name: wave.wave.name,
+    })),
   }));
 }, {});
