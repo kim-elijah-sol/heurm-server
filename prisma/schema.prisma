@@ -112,5 +112,5 @@ model FlowWave {
   flow    Flow    @relation(fields: [flowId], references: [id], onDelete: Cascade)
   wave    Wave    @relation(fields: [waveId], references: [id], onDelete: Cascade)
 
-  @@id([flowId, waveId])
+  @@unique([flowId, waveId])
 }
