@@ -2,6 +2,7 @@ import { app } from '~/app';
 import { user } from '~/domain/user';
 import { guardAccessToken } from '~/lib/plugin';
 import { flow } from './domain/flow';
+import { flowWave } from './domain/flow-wave';
 import { history } from './domain/history';
 import { wave } from './domain/wave';
 
@@ -72,6 +73,9 @@ app
     app
       .post('/', wave.postWave, wave.postWave.model)
       .get('/', wave.getWave, wave.getWave.model)
+  )
+  .group('/flow-wave', (app) =>
+    app.post('/', flowWave.postFlowWave, flowWave.postFlowWave.model)
   );
 
 app.listen(3000, () => {
