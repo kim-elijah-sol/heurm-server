@@ -98,12 +98,14 @@ model FlowHistory {
 }
 
 model Wave {
-  id      String     @id @default(cuid())
-  userId  String
-  name    String     @unique
+  id        String     @id @default(cuid())
+  userId    String
+  name      String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
-  user    User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  flow    FlowWave[]
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  flow      FlowWave[]
 }
 
 model FlowWave {
