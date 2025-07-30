@@ -1,3 +1,4 @@
+import { patchReorder } from './reorder.patch';
 import { deleteWave } from './wave.delete';
 import { getWave } from './wave.get';
 import { patchWave } from './wave.patch';
@@ -8,4 +9,5 @@ export const wave = {
   patchWave,
   getWave,
   deleteWave,
+  patchReorder,
 };

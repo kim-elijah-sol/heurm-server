@@ -75,6 +75,7 @@ app
       .patch('/', wave.patchWave, wave.patchWave.model)
       .get('/', wave.getWave, wave.getWave.model)
       .delete('/', wave.deleteWave, wave.deleteWave.model)
+      .patch('/reorder', wave.patchReorder, wave.patchReorder.model)
   )
   .group('/flow-wave', (app) =>
     app
