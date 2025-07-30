@@ -9,9 +9,12 @@ export const getWave = createAPI(async ({ prismaClient, userId }) => {
       id: true,
       name: true,
     },
-    orderBy: {
-      createdAt: 'desc',
-    },
+    orderBy: [
+      { order: { sort: 'asc', nulls: 'first' } },
+      {
+        createdAt: 'desc',
+      },
+    ],
   });
 
   return result;
