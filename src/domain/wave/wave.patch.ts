@@ -1,6 +1,7 @@
 import { t } from 'elysia';
 import { createAPI } from '~/lib/create-api';
 import { ConflictError } from '~/lib/error';
+import { postWave } from './wave.post';
 
 export const patchWave = createAPI(
   async ({ body: { name, id }, prismaClient, userId }) => {
@@ -35,8 +36,8 @@ export const patchWave = createAPI(
   },
   {
     body: t.Object({
+      ...postWave.model.body.properties,
       id: t.String(),
-      name: t.String(),
     }),
   }
 );
