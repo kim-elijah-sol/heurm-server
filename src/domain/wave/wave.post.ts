@@ -9,6 +9,9 @@ export const postWave = createAPI(
         userId,
         name,
       },
+      select: {
+        id: true,
+      },
     });
 
     if (conflictWaveForName !== null) {
