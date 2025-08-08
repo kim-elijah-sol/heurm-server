@@ -3,7 +3,7 @@ import { t } from 'elysia';
 import { getUserTimezone } from '~/lib/cache';
 import { createAPI } from '~/lib/create-api';
 import { ConflictError } from '~/lib/error';
-import { v } from '~/lib/validator';
+import { postFlow } from './flow.post';
 
 export const patchFlow = createAPI(
   async ({
@@ -94,33 +94,8 @@ export const patchFlow = createAPI(
   },
   {
     body: t.Object({
+      ...postFlow.model.body.properties,
       flowId: t.String(),
-
-      name: v.isFlowName,
-      type: v.isFlowType,
-      color: v.isFlowColor,
-      intervalType: v.isFlowIntervalType,
-
-      repeatType: v.isFlowRepeatType,
-      repeat: t.Optional(t.Nullable(t.Number())),
-      rest: t.Optional(t.Nullable(t.Number())),
-
-      days: t.Optional(t.Array(t.Number())),
-
-      dates: t.Optional(t.Array(t.Number())),
-      weeks: t.Optional(t.Array(t.Number())),
-
-      months: t.Optional(t.Array(t.Number())),
-
-      targetCount: t.Optional(t.Nullable(t.Number())),
-      unit: t.Optional(t.Nullable(t.String())),
-      accumulateType: t.Optional(t.Nullable(v.isFlowIntervalType)),
-
-      startAt: v.isDate,
-      endAt: t.Optional(t.Nullable(v.isDate)),
-
-      startTime: t.Optional(t.Nullable(t.Number())),
-      endTime: t.Optional(t.Nullable(t.Number())),
     }),
   }
 );
