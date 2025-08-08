@@ -2,6 +2,7 @@ import { fromZonedTime } from 'date-fns-tz';
 import { t } from 'elysia';
 import { getUserTimezone } from '~/lib/cache';
 import { createAPI } from '~/lib/create-api';
+import { ConflictError } from '~/lib/error';
 import { v } from '~/lib/validator';
 
 export const postFlow = createAPI(
@@ -36,6 +37,18 @@ export const postFlow = createAPI(
     userId,
     prismaClient,
   }) => {
+    const conflictFlowForName = await prismaClient.flow.findFirst({
+      where: {
+        userId,
+        name,
+      },
+      select: { id: true },
+    });
+
+    if (conflictFlowForName !== null) {
+      throw new ConflictError(`${name} flow is already added.`);
+    }
+
     const userTimezone = await getUserTimezone(userId!);
 
     const result = await prismaClient.flow.create({
