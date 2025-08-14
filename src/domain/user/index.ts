@@ -1,3 +1,4 @@
+import { deleteCancel } from './cancel.delete';
 import { join } from './join';
 import { postLogin } from './login.post';
 import { deleteLogout } from './logout.delete';
@@ -21,4 +22,6 @@ export const user = {
 
   join,
   resetPassword,
+
+  deleteCancel,
 };

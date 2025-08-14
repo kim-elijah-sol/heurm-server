@@ -55,6 +55,7 @@ app
     app
       .get('/profile', user.getProfile, user.getProfile.model)
       .patch('/profile', user.patchProfile, user.patchProfile.model)
+      .delete('/cancel', user.deleteCancel, user.deleteCancel.model)
   )
   .group('/flow', (app) =>
     app
