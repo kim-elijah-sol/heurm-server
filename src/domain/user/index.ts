@@ -7,11 +7,6 @@ import { patchProfile } from './profile.patch';
 import { postRefresh } from './refresh.post';
 import { resetPassword } from './reset-password';
 
-export * from './login.post';
-export * from './logout.delete';
-export * from './profile.get';
-export * from './refresh.post';
-
 export const user = {
   postLogin,
   deleteLogout,
