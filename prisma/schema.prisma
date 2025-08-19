@@ -26,6 +26,7 @@ model User {
 model RefreshToken {
   refreshToken   String   @db.VarChar(250) @unique
   createdAt      DateTime @default(now())
+  clientId       String   @db.VarChar(100)
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
 }
