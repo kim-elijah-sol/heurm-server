@@ -1,10 +1,13 @@
 import { t } from 'elysia';
 import { createAPI } from '~/lib/create-api';
-import { RedisKeyStore } from '~/lib/redis-key-store';
 
 export const deleteLogout = createAPI(
-  async ({ body: { refreshToken }, redisClient }) => {
-    await redisClient.del(RedisKeyStore.refreshToken(refreshToken));
+  async ({ body: { refreshToken }, prismaClient }) => {
+    await prismaClient.refreshToken.delete({
+      where: {
+        refreshToken,
+      },
+    });
 
     return {
       result: true,
