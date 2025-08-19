@@ -3,17 +3,10 @@ import { SHA256 } from 'crypto-js';
 import { t } from 'elysia';
 import { createAPI } from '~/lib/create-api';
 import { UnauthorizedError } from '~/lib/error';
-import { RedisKeyStore } from '~/lib/redis-key-store';
 import { v } from '~/lib/validator';
 
 export const postLogin = createAPI(
-  async ({
-    body: { email, password },
-    atJWT,
-    rtJWT,
-    prismaClient,
-    redisClient,
-  }) => {
+  async ({ body: { email, password }, atJWT, rtJWT, prismaClient }) => {
     const user = await prismaClient.user.findUnique({
       select: {
         id: true,
@@ -41,7 +34,13 @@ export const postLogin = createAPI(
       ci: clientId,
     });
 
-    await redisClient.set(RedisKeyStore.refreshToken(refreshToken), clientId);
+    await prismaClient.refreshToken.create({
+      data: {
+        refreshToken,
+        clientId,
+        userId: id,
+      },
+    });
 
     return {
       accessToken,
