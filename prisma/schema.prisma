@@ -20,6 +20,13 @@ model User {
 
   flows          Flow[]
   waves          Wave[]
+  refreshToken   RefreshToken[]
+}
+
+model RefreshToken {
+  refreshToken   String   @db.VarChar(250) @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
 }
 
 model Flow {
