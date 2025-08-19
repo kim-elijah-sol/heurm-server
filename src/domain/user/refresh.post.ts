@@ -1,15 +1,25 @@
 import { t } from 'elysia';
 import { createAPI } from '~/lib/create-api';
-import { UnauthorizedError } from '~/lib/error';
-import { RedisKeyStore } from '~/lib/redis-key-store';
+import { BadRequestError, UnauthorizedError } from '~/lib/error';
 
 export const postRefresh = createAPI(
-  async ({ body: { refreshToken, clientId }, rtJWT, atJWT, redisClient }) => {
-    const clientIdInRedis = await redisClient.get(
-      RedisKeyStore.refreshToken(refreshToken)
-    );
+  async ({ body: { refreshToken, clientId }, rtJWT, atJWT, prismaClient }) => {
+    const clientIdInDbResult = await prismaClient.refreshToken.findUnique({
+      where: {
+        refreshToken,
+      },
+      select: {
+        clientId: true,
+      },
+    });
 
-    if (clientIdInRedis !== clientId) {
+    if (!clientIdInDbResult) {
+      throw new BadRequestError('refresh token is not available');
+    }
+
+    const clientIdInDb = clientIdInDbResult.clientId;
+
+    if (clientIdInDb !== clientId) {
       throw new UnauthorizedError('authorization error');
     }
 
