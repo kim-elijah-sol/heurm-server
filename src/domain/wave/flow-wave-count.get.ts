@@ -17,6 +17,6 @@ export const getFlowWaveCount = createAPI(async ({ userId, prismaClient }) => {
   return result.map((it) => ({
     id: it.id,
     name: it.name,
-    flowWaveCount: it._count,
+    flowWaveCount: it._count.flow,
   }));
 }, {});

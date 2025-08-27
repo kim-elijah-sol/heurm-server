@@ -1,3 +1,4 @@
+import { getFlowWaveCount } from './flow-wave-count.get';
 import { patchReorder } from './reorder.patch';
 import { deleteWave } from './wave.delete';
 import { getWave } from './wave.get';
@@ -10,4 +11,5 @@ export const wave = {
   getWave,
   deleteWave,
   patchReorder,
+  getFlowWaveCount,
 };

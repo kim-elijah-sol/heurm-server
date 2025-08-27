@@ -77,10 +77,14 @@ app
       .get('/', wave.getWave, wave.getWave.model)
       .delete('/', wave.deleteWave, wave.deleteWave.model)
       .patch('/reorder', wave.patchReorder, wave.patchReorder.model)
+      .get(
+        '/flow-wave-count',
+        wave.getFlowWaveCount,
+        wave.getFlowWaveCount.model
+      )
   )
   .group('/flow-wave', (app) =>
     app
-      .get('/count', flowWave.getFlowWaveCount, flowWave.getFlowWaveCount.model)
       .post('/', flowWave.postFlowWave, flowWave.postFlowWave.model)
       .delete('/', flowWave.deleteFlowWave, flowWave.deleteFlowWave.model)
   );
