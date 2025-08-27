@@ -12,6 +12,12 @@ export const getFlowWaveCount = createAPI(async ({ userId, prismaClient }) => {
         select: { flow: true },
       },
     },
+    orderBy: [
+      { order: { sort: 'asc', nulls: 'first' } },
+      {
+        createdAt: 'desc',
+      },
+    ],
   });
 
   return result.map((it) => ({
