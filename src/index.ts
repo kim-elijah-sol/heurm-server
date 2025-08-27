@@ -80,6 +80,7 @@ app
   )
   .group('/flow-wave', (app) =>
     app
+      .get('/count', flowWave.getFlowWaveCount, flowWave.getFlowWaveCount.model)
       .post('/', flowWave.postFlowWave, flowWave.postFlowWave.model)
       .delete('/', flowWave.deleteFlowWave, flowWave.deleteFlowWave.model)
   );
