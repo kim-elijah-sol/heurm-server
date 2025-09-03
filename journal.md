@@ -1,5 +1,10 @@
 # Heurm Server Journal
 
+# 2025-09-03
+
+이젠 테스트 코드를 좀 작성해야 할 것 같다.<br>
+eden 을 사용하면 e2e 테스팅에 유용하고, jest 로 unit 을 진행해봐야겠다.
+
 # 2025-08-13
 
 유저가 로그인 했을 때, refresh token 을 redis 에 넣는 것이 맞는지 고민 중이다.<br>
