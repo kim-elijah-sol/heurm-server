@@ -1,6 +1,5 @@
-export class BadRequestError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'BadRequestError';
-  }
+import { HttpsError } from './https-error';
+
+export class BadRequestError extends HttpsError {
+  public statusCode: number = 400;
 }

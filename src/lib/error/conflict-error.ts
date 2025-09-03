@@ -1,6 +1,5 @@
-export class ConflictError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'ConflictError';
-  }
+import { HttpsError } from './https-error';
+
+export class ConflictError extends HttpsError {
+  public statusCode: number = 409;
 }

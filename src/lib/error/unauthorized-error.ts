@@ -1,6 +1,5 @@
-export class UnauthorizedError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'UnauthorizedError';
-  }
+import { HttpsError } from './https-error';
+
+export class UnauthorizedError extends HttpsError {
+  public statusCode: number = 401;
 }
