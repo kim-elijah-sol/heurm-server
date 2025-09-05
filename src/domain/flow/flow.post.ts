@@ -105,7 +105,7 @@ export const postFlow = createAPI(
 
       targetCount: t.Optional(t.Nullable(t.Number())),
       unit: t.Optional(t.Nullable(t.String())),
-      accumulateType: t.Optional(t.Nullable(v.isFlowIntervalType)),
+      accumulateType: t.Optional(t.Nullable(v.isFlowAccumulateType)),
 
       startAt: v.isDate,
       endAt: t.Optional(t.Nullable(v.isDate)),

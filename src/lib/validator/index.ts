@@ -1,5 +1,6 @@
 import { isDate } from './is-date';
 import { isEmail } from './is-email';
+import { isFlowAccumulateType } from './is-flow-accumulateType';
 import { isFlowColor } from './is-flow-color';
 import { isFlowIntervalType } from './is-flow-interval-type';
 import { isFlowName } from './is-flow-name';
@@ -22,4 +23,5 @@ export const v = {
   isHistoryCount,
   isFlowIntervalType,
   isFlowRepeatType,
+  isFlowAccumulateType,
 };
