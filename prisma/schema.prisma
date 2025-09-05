@@ -54,7 +54,7 @@ model Flow {
 
   targetCount      Int?
   unit             String?
-  accumulateType   FlowIntervalType?
+  accumulateType   FlowAccmulateType?
 
   startAt          DateTime @default(now())
   endAt            DateTime?
@@ -76,6 +76,12 @@ enum FlowType {
   COMPLETE
   OVER
   UNDER
+}
+
+enum FlowAccmulateType {
+  WEEKLY
+  MONTHLY
+  YEARLY
 }
 
 enum FlowIntervalType {
